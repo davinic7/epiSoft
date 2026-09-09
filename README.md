@@ -1,0 +1,40 @@
+# epiSoft
+
+Sistema de gestión integral para Espacios de Primera Infancia (EPI).
+Despliegue web único, multi-institución: una sola instalación da servicio
+a varias EPI, con los datos de cada una aislados entre sí.
+
+## Módulos
+
+| Módulo | Alcance |
+|---|---|
+| Niños | Legajos, referentes, salas, salud, asistencia diaria |
+| RRHH | Personal, documentación con vencimientos, capacitaciones, horarios |
+| Economato | Stock por lote, libro de movimientos, menú semanal, inventario |
+| Pedagógico | Registro diario, seguimientos, desafíos del desarrollo, informes |
+| Institucional | Mapa de riesgos, articulaciones, recursero, vulneración de derechos |
+| Alertas | Motor de alertas derivadas de los datos de los demás módulos |
+
+## Stack
+
+Laravel (PHP 8.3) + MySQL/MariaDB. Ver [ADR-001](docs/adr/001-stack.md).
+
+## Estado
+
+En fase M0 (fundaciones).
+
+El [prototipo HTML original](docs/prototipo/) es la referencia de interfaz.
+No es la aplicación: los datos que muestra son de ejemplo.
+
+## Documentación
+
+- [Backlog completo](docs/BACKLOG.md)
+- [Decisiones de arquitectura](docs/adr/)
+- [Convenciones de trabajo](CONTRIBUTING.md)
+
+## Datos sensibles
+
+El sistema almacena datos personales de niños y niñas, incluida información
+de salud y de situaciones de vulneración de derechos. Todo desarrollo sobre
+este repositorio está sujeto a la Ley 25.326 de Protección de Datos
+Personales. No se cargan datos reales en entornos de desarrollo ni de prueba.
