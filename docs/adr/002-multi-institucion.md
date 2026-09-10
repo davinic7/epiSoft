@@ -1,8 +1,8 @@
 # ADR-002: Estrategia de multi-institución
 
-**Estado:** Propuesto
-**Fecha:**
-**Decide:**
+**Estado:** Aceptado
+**Fecha:** 2026-09-10
+**Decide:** davinic7 (responsable único del proyecto)
 
 ## Contexto
 
@@ -40,8 +40,25 @@ aislamiento con un stack sin ese mecanismo.
 
 ## Decisión
 
-Pendiente.
+Opción A: base compartida con `institucion_id`, con el aislamiento aplicado
+mediante *global scopes* de Eloquent en todos los modelos de negocio.
 
 ## Consecuencias
 
-Pendiente.
+- Se vuelve más fácil: una sola base para operar y migrar; el filtro por
+  institución queda resuelto en un solo lugar por modelo (el scope), no
+  repetido a mano en cada consulta.
+- Se vuelve más difícil: **no se puede restaurar el backup de una sola
+  institución sin trabajo manual** — el backup es de toda la base, y
+  extraer los datos de una institución puntual desde ese volcado es un
+  proceso ad hoc, no un restore directo.
+- Mitigación de ese riesgo:
+  - Baja lógica en todo (`deleted_at`); nunca borrado físico de registros
+    de negocio.
+  - Exportación por institución (dump filtrado por `institucion_id`) antes
+    de cualquier operación riesgosa sobre esa institución — migración de
+    datos, borrado masivo, cambio de plan, etc.
+- Habrá que revisar más adelante: si una institución pide irse del sistema
+  o requiere aislamiento físico real (por ejemplo, por exigencia legal
+  propia), evaluar si conviene migrarla a una base separada en ese momento
+  puntual, en vez de rediseñar el esquema general.
