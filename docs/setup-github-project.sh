@@ -99,12 +99,16 @@ ms_de_fase() {
 echo "==> Project"
 PROJECT_NUM=""
 if [[ $DRY_RUN -eq 0 ]]; then
-  PROJECT_NUM=$(gh project list --owner "$OWNER" --format json 2>/dev/null \
-    | python3 -c "import sys,json;p=[x['number'] for x in json.load(sys.stdin)['projects'] if x['title']=='$PROJECT_TITLE'];print(p[0] if p else '')" 2>/dev/null || true)
+  PROJECT_NUM=$(gh project list --owner "$OWNER" --format json \
+    --jq ".projects[] | select(.title==\"$PROJECT_TITLE\") | .number" 2>/dev/null | head -n1)
   if [[ -z "$PROJECT_NUM" ]]; then
     PROJECT_NUM=$(gh project create --owner "$OWNER" --title "$PROJECT_TITLE" --format json \
-      | python3 -c "import sys,json;print(json.load(sys.stdin)['number'])") || true
-    echo "  ok  creado (#$PROJECT_NUM)"
+      --jq ".number" 2>/dev/null) || true
+    if [[ -n "$PROJECT_NUM" ]]; then
+      echo "  ok  creado (#$PROJECT_NUM)"
+    else
+      echo "  !!  no se pudo crear el project (revisar scopes: gh auth refresh -s project,read:project)"
+    fi
   else
     echo "  --  ya existe (#$PROJECT_NUM)"
   fi
