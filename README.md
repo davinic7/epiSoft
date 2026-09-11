@@ -17,11 +17,25 @@ a varias EPI, con los datos de cada una aislados entre sí.
 
 ## Stack
 
-Laravel (PHP 8.3) + MySQL/MariaDB. Ver [ADR-001](docs/adr/001-stack.md).
+Laravel 13 (PHP 8.3+) + MySQL/MariaDB. Ver [ADR-001](docs/adr/001-stack.md).
+
+## Levantar el entorno
+
+```bash
+composer install
+cp .env.example .env   # si no existe ya
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
+
+Requiere PHP 8.3+, Composer y MySQL/MariaDB corriendo localmente
+(en Windows, [Laravel Herd](https://herd.laravel.com) resuelve las tres cosas).
 
 ## Estado
 
-En fase M0 (fundaciones).
+En fase M0 (fundaciones). Esqueleto de Laravel 13 instalado; falta el
+esquema de base de datos, autenticación y el resto de los issues de M0.
 
 El [prototipo HTML original](docs/prototipo/) es la referencia de interfaz.
 No es la aplicación: los datos que muestra son de ejemplo.
