@@ -4,6 +4,7 @@ use App\Models\Institucion;
 use App\Models\User;
 use App\Support\InstitucionContext;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Schema;
 
 /**
@@ -61,6 +62,16 @@ it('no permite acceder por id a un registro de otra institución', function () {
     app(InstitucionContext::class)->set($this->epiA->id);
 
     expect(RegistroDePrueba::find($this->registroB->id))->toBeNull();
+});
+
+it('lanza 404 (no una excepción distinta) al pedir por id un registro de otra institución vía route-model-binding', function () {
+    // findOrFail() es lo que Laravel dispara en el binding implícito de rutas
+    // (Route::get('/registros/{registro}', ...)): es el vector real cuando
+    // alguien cambia el id en la URL, no find() a secas.
+    app(InstitucionContext::class)->set($this->epiA->id);
+
+    expect(fn () => RegistroDePrueba::findOrFail($this->registroB->id))
+        ->toThrow(ModelNotFoundException::class);
 });
 
 it('no muestra nada si no hay institución activa (fail-closed)', function () {
