@@ -47,6 +47,9 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return BelongsToMany<Institucion, $this>
+     */
     public function instituciones(): BelongsToMany
     {
         return $this->belongsToMany(Institucion::class);

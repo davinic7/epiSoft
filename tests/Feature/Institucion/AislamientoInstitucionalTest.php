@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Concerns\PerteneceAInstitucion;
 use App\Models\Institucion;
 use App\Models\User;
 use App\Support\InstitucionContext;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Schema;
  */
 class RegistroDePrueba extends Model
 {
-    use \App\Models\Concerns\PerteneceAInstitucion;
+    use PerteneceAInstitucion;
 
     protected $table = 'registros_de_prueba';
 

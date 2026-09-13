@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Scope;
  * ninguna institución activa, no debe verse ningún registro: fail-closed,
  * nunca fail-open. Un id inexistente (-1) logra ese cierre sin depender de
  * columnas nulas ni de condicionales que alguien pueda borrar por error.
+ *
+ * @implements Scope<Model>
  */
 class InstitucionScope implements Scope
 {

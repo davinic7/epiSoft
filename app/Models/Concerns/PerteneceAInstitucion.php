@@ -26,6 +26,9 @@ trait PerteneceAInstitucion
         });
     }
 
+    /**
+     * @return BelongsTo<Institucion, $this>
+     */
     public function institucion(): BelongsTo
     {
         return $this->belongsTo(Institucion::class);

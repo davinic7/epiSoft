@@ -14,6 +14,9 @@ class Institucion extends Model
 
     protected $fillable = ['nombre'];
 
+    /**
+     * @return BelongsToMany<User, $this>
+     */
     public function usuarios(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
