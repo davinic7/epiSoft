@@ -1,28 +1,47 @@
-/.phpunit.cache
-/node_modules
-/public/build
-/public/fonts-manifest.dev.json
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-/vendor
+# Entorno
 .env
 .env.backup
 .env.production
-.phpactor.json
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-/auth.json
-/.fleet
-/.idea
-/.nova
-/.vscode
-/.zed
+!.env.example
 
+# Dependencias
+/vendor
+/node_modules
+/auth.json
+composer.phar
+
+# Compilados y caché
+/public/build
+/public/hot
+/public/storage
+/public/fonts-manifest.dev.json
+/storage/*.key
+/storage/pail
+/bootstrap/cache/*.php
+.phpunit.result.cache
+/.phpunit.cache
+_ide_helper.php
+.phpactor.json
+
+# Adjuntos subidos por usuarios (nunca al repo)
 /storage/app/adjuntos/
+/uploads/
+
+# Editores y sistema
+/.idea
+/.vscode
+/.nova
+/.zed
+/.cursor
+/.codex
+.DS_Store
+Thumbs.db
+*.swp
+*.log
+
+# Backups y volcados
 *.sql
 *.sql.gz
+*.dump
+Homestead.json
+Homestead.yaml
