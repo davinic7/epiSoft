@@ -1,31 +1,28 @@
-# Entorno
-.env
-.env.*
-!.env.example
-
-# Dependencias
-/vendor/
-/node_modules/
-
-# Compilados y caché
-/public/build/
+/.phpunit.cache
+/node_modules
+/public/build
+/public/fonts-manifest.dev.json
 /public/hot
+/public/storage
 /storage/*.key
-*.cache
+/storage/pail
+/vendor
+.env
+.env.backup
+.env.production
+.phpactor.json
 .phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/auth.json
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
 
-# Adjuntos subidos por usuarios (nunca al repo)
 /storage/app/adjuntos/
-/uploads/
-
-# Editores y sistema
-.idea/
-.vscode/
-.DS_Store
-Thumbs.db
-*.swp
-
-# Backups y volcados
 *.sql
 *.sql.gz
-*.dump
