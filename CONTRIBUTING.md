@@ -3,8 +3,7 @@
 ## Ramas
 
 - `main` — código desplegable. No se commitea directo.
-- `develop` — integración.
-- `feat/<nro-issue>-descripcion-corta` — una rama por issue.
+- `feat/<nro-issue>-descripcion-corta` — una rama por issue, sale de `main` y vuelve a `main`.
 - `fix/<nro-issue>-descripcion-corta`
 
 ## Commits
@@ -23,7 +22,6 @@ Cerrar el issue desde el PR con `Closes #12`.
 
 ## Pull requests
 
-- Un PR por issue.
 - Los criterios de aceptación del issue tienen que estar tildados.
 - No se mergea con pruebas en rojo.
 
