@@ -94,7 +94,7 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] Roles definidos: superadmin, dirección, docente, administrativo, nutrición
+- [ ] Roles definidos según cap. 2 de la guía de buenas prácticas: superadmin, equipo de coordinación, encargado de recepción, coordinador pedagógico, educador, encargado de economato, personal de cocina, personal de mantenimiento y limpieza (los equipos itinerantes de la Dirección Provincial quedan fuera, pendientes de modelado propio)
 - [ ] Permisos por módulo y por acción (ver, crear, editar, eliminar)
 - [ ] Un usuario pertenece a una o más instituciones con rol por institución
 
@@ -114,7 +114,7 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 - [ ] Tabla de auditoría con usuario, acción, entidad, fecha e IP
 - [ ] Se registra todo acceso y modificación a datos sensibles de niños
-- [ ] Pantalla de consulta de auditoría para dirección y superadmin
+- [ ] Pantalla de consulta de auditoría para equipo de coordinación y superadmin
 
 #### Protecciones básicas de la aplicación web
 `area:seguridad` · `prioridad:alta` · `estimación:S`
@@ -322,7 +322,7 @@ _Stock por lote, libro de movimientos, menú semanal e inventario patrimonial._
 
 - [ ] Bloqueo de movimientos de períodos cerrados
 - [ ] Reporte de cierre con saldos iniciales y finales
-- [ ] Solo dirección puede reabrir un período
+- [ ] Solo el equipo de coordinación puede reabrir un período
 
 ### M3 · Pedagógico
 
@@ -397,7 +397,7 @@ _Registro diario, seguimientos, desafíos del desarrollo e informes._
 
 **Criterios de aceptación**
 
-- [ ] Dirección puede editar los textos base de cada tipo de informe
+- [ ] El equipo de coordinación puede editar los textos base de cada tipo de informe
 - [ ] Las plantillas son propias de cada institución
 
 ### M4 · RRHH
@@ -448,7 +448,7 @@ _Personal, documentación con vencimientos, capacitaciones y horarios._
 
 - [ ] Pestañas: datos, documentación, capacitaciones, horario
 - [ ] Impresión del legajo
-- [ ] Acceso restringido a dirección y administración
+- [ ] Acceso restringido al equipo de coordinación
 
 #### Registro de ausencias y licencias
 `area:rrhh` · `prioridad:baja` · `estimación:M`
@@ -477,7 +477,7 @@ _Mapa de riesgos, vulneración de derechos, articulaciones y motor de alertas._
 
 **Criterios de aceptación**
 
-- [ ] Registro con acceso restringido solo a dirección
+- [ ] Módulo propio, separado de Institucional, con acceso restringido solo al equipo de coordinación y sin permiso de eliminar registros
 - [ ] Bitácora de intervenciones y derivaciones
 - [ ] Auditoría reforzada: se registra toda consulta al registro
 - [ ] Los datos no aparecen en listados ni reportes generales
@@ -533,7 +533,7 @@ _Mapa de riesgos, vulneración de derechos, articulaciones y motor de alertas._
 
 **Criterios de aceptación**
 
-- [ ] Resumen diario o semanal de alertas críticas a dirección
+- [ ] Resumen diario o semanal de alertas críticas al equipo de coordinación
 - [ ] Configuración de frecuencia por usuario
 - [ ] Baja de la suscripción desde el correo
 
@@ -601,7 +601,7 @@ _Backups, despliegue, pruebas, rendimiento y capacitación._
 **Criterios de aceptación**
 
 - [ ] Manual por rol con capturas
-- [ ] Guía rápida de una página para docentes
+- [ ] Guía rápida de una página para educadoras/es
 - [ ] Sesión de capacitación al equipo
 
 #### Alta y onboarding de nuevas instituciones
