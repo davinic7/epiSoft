@@ -11,6 +11,15 @@ namespace App\Enums;
  * "instituciones" no es un módulo de esta lista: su CRUD es exclusivo del
  * superadmin (bypass de Gate, no permiso de spatie), no algo que un rol
  * institucional pueda tener.
+ *
+ * "Vulneraciones" está separado de "Institucional" (y no es un sub-caso
+ * suyo) porque agrupan datos de sensibilidad muy distinta: mapa de riesgo,
+ * articulaciones y recursero comunitario son de consulta amplia, mientras
+ * que el registro de sospecha de vulneración de derechos (guía, cap. 6.1)
+ * exige acceso restringido a los pocos actores que la guía nombra ahí
+ * (equipo de coordinación y los equipos técnicos provinciales de abordaje
+ * global y trabajo social) y auditoría reforzada (docs/backlog.txt, issue
+ * "Módulo de vulneración de derechos").
  */
 enum Modulo: string
 {
@@ -20,6 +29,7 @@ enum Modulo: string
     case Pedagogico = 'pedagogico';
     case Rrhh = 'rrhh';
     case Institucional = 'institucional';
+    case Vulneraciones = 'vulneraciones';
     case Alertas = 'alertas';
 
     /**

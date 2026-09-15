@@ -12,11 +12,11 @@ it('un rol asignado en la EPI A no otorga sus permisos en la EPI B', function ()
     $epiB = Institucion::create(['nombre' => 'EPI B']);
     $usuario = User::factory()->create();
 
-    // El rol "docente" trae, entre otros, el permiso ninos.editar (ver
+    // El rol "educador" trae, entre otros, el permiso ninos.editar (ver
     // ProvisionadorDeRolesInstitucionales::MATRIZ). Cada institución tiene
-    // su propia fila de rol "docente" con ese permiso, sembrada al crearse.
+    // su propia fila de rol "educador" con ese permiso, sembrada al crearse.
     app(InstitucionContext::class)->set($epiA->id);
-    $usuario->assignRole(RolInstitucional::Docente->value);
+    $usuario->assignRole(RolInstitucional::Educador->value);
 
     app(InstitucionContext::class)->set($epiA->id);
     expect(User::find($usuario->id)->can('ninos.editar'))->toBeTrue();
@@ -30,19 +30,19 @@ it('el rol de un usuario en una institución no aplica en otra', function () {
     $epiB = Institucion::create(['nombre' => 'EPI B']);
     $usuario = User::factory()->create();
 
-    Role::create(['name' => 'docente']);
+    Role::create(['name' => 'educador']);
 
     app(InstitucionContext::class)->set($epiA->id);
-    $usuario->assignRole('docente');
+    $usuario->assignRole('educador');
 
     app(InstitucionContext::class)->set($epiA->id);
-    expect(User::find($usuario->id)->hasRole('docente'))->toBeTrue();
+    expect(User::find($usuario->id)->hasRole('educador'))->toBeTrue();
 
     app(InstitucionContext::class)->set($epiB->id);
-    expect(User::find($usuario->id)->hasRole('docente'))->toBeFalse();
+    expect(User::find($usuario->id)->hasRole('educador'))->toBeFalse();
 
     app(InstitucionContext::class)->set(null);
-    expect(User::find($usuario->id)->hasRole('docente'))->toBeFalse();
+    expect(User::find($usuario->id)->hasRole('educador'))->toBeFalse();
 });
 
 it('un usuario puede tener un rol distinto en cada institución', function () {
@@ -50,22 +50,22 @@ it('un usuario puede tener un rol distinto en cada institución', function () {
     $epiB = Institucion::create(['nombre' => 'EPI B']);
     $usuario = User::factory()->create();
 
-    Role::create(['name' => 'docente']);
-    Role::create(['name' => 'dirección']);
+    Role::create(['name' => 'educador']);
+    Role::create(['name' => 'equipo de coordinación']);
 
     app(InstitucionContext::class)->set($epiA->id);
-    $usuario->assignRole('docente');
+    $usuario->assignRole('educador');
 
     app(InstitucionContext::class)->set($epiB->id);
-    $usuario->assignRole('dirección');
+    $usuario->assignRole('equipo de coordinación');
 
     app(InstitucionContext::class)->set($epiA->id);
-    expect(User::find($usuario->id)->hasRole('docente'))->toBeTrue();
-    expect(User::find($usuario->id)->hasRole('dirección'))->toBeFalse();
+    expect(User::find($usuario->id)->hasRole('educador'))->toBeTrue();
+    expect(User::find($usuario->id)->hasRole('equipo de coordinación'))->toBeFalse();
 
     app(InstitucionContext::class)->set($epiB->id);
-    expect(User::find($usuario->id)->hasRole('dirección'))->toBeTrue();
-    expect(User::find($usuario->id)->hasRole('docente'))->toBeFalse();
+    expect(User::find($usuario->id)->hasRole('equipo de coordinación'))->toBeTrue();
+    expect(User::find($usuario->id)->hasRole('educador'))->toBeFalse();
 });
 
 it('el superadmin tiene acceso sin importar la institución activa, incluso sin ninguna seleccionada', function () {
