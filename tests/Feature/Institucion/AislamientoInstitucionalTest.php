@@ -80,3 +80,14 @@ it('no muestra nada si no hay institución activa (fail-closed)', function () {
 
     expect(RegistroDePrueba::count())->toBe(0);
 });
+
+it('el bypass de Gate del superadmin no evita el fail-closed de InstitucionScope', function () {
+    $superadmin = User::factory()->create(['is_superadmin' => true]);
+    $this->actingAs($superadmin);
+
+    app(InstitucionContext::class)->set(null);
+    expect(RegistroDePrueba::count())->toBe(0);
+
+    app(InstitucionContext::class)->set($this->epiA->id);
+    expect(RegistroDePrueba::pluck('titulo')->all())->toBe(['Dato de EPI A']);
+});

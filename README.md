@@ -26,11 +26,18 @@ composer install
 cp .env.example .env   # si no existe ya
 php artisan key:generate
 php artisan migrate
+npm install
+npm run build           # o `npm run dev` para levantar Vite en modo watch
 php artisan serve
 ```
 
-Requiere PHP 8.3+, Composer y MySQL/MariaDB corriendo localmente
-(en Windows, [Laravel Herd](https://herd.laravel.com) resuelve las tres cosas).
+Requiere PHP 8.3+, Composer, Node.js y MySQL/MariaDB corriendo localmente
+(en Windows, [Laravel Herd](https://herd.laravel.com) resuelve PHP y MySQL).
+
+Sin `npm run build` (o `npm run dev` corriendo), cualquier vista que use Vite
+falla con `ViteManifestNotFoundException` porque falta `public/build/manifest.json`
+— incluye las pantallas de autenticación, el dashboard y toda la suite de tests
+que las ejercita.
 
 ## Estado
 
