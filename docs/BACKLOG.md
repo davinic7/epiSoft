@@ -48,9 +48,9 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] README con descripción del sistema y cómo levantarlo
-- [ ] .gitignore, .editorconfig y convención de commits definidas
-- [ ] Ramas main y develop protegidas
+- [x] README con descripción del sistema y cómo levantarlo
+- [x] .gitignore, .editorconfig y convención de commits definidas
+- [x] Rama main protegida
 
 #### Entorno de desarrollo reproducible
 `area:infra` · `prioridad:alta` · `estimación:M`
