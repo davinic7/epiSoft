@@ -163,7 +163,7 @@ _El núcleo del sistema: legajos, salas, referentes, salud y asistencia diaria._
 
 **Criterios de aceptación**
 
-- [ ] CRUD de salas con turno y capacidad máxima
+- [x] CRUD de salas con turno y capacidad máxima
 - [ ] Asignación de un niño a una sala
 - [ ] El sistema avisa al superar el cupo de la sala
 
