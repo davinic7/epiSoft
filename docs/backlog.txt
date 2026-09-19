@@ -1,7 +1,7 @@
 fase|area|prioridad|estimacion|titulo|criterios
 M0|core|alta|S|ADR-001: elegir stack backend definitivo|Documentar 2-3 opciones con pros y contras;Registrar la decisión y sus consecuencias en docs/adr/001-stack.md;Marcar el ADR como Aceptado antes de escribir código de aplicación
 M0|core|alta|M|ADR-002: estrategia de multi-institución|Comparar base compartida con institucion_id contra base por institución;Definir cómo se resuelve la institución activa en cada request;Documentar el impacto en backups y en migraciones
-M0|infra|alta|S|Estructura del repositorio y convenciones|README con descripción del sistema y cómo levantarlo;.gitignore, .editorconfig y convención de commits definidas;Ramas main y develop protegidas
+M0|infra|alta|S|Estructura del repositorio y convenciones|README con descripción del sistema y cómo levantarlo;.gitignore, .editorconfig y convención de commits definidas;Rama main protegida
 M0|infra|alta|M|Entorno de desarrollo reproducible|Un solo comando levanta la app y la base de datos;Datos de prueba (seed) de una institución ficticia;Documentado en README para que otra persona lo levante sin ayuda
 M0|core|alta|L|Esquema inicial de base de datos y sistema de migraciones|Migraciones versionadas y aplicables en orden;Todas las tablas de negocio llevan institucion_id;Índices en las claves foráneas y en los campos de búsqueda frecuente
 M0|core|alta|S|Tabla instituciones y alta de institución|CRUD de instituciones accesible solo para superadmin;Datos: nombre, dirección, CUIT, referente, capacidad;Al menos una institución cargada por seed
