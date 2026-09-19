@@ -112,9 +112,9 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] Tabla de auditoría con usuario, acción, entidad, fecha e IP
+- [x] Tabla de auditoría con usuario, acción, entidad, fecha e IP
 - [ ] Se registra todo acceso y modificación a datos sensibles de niños
-- [ ] Pantalla de consulta de auditoría para equipo de coordinación y superadmin
+- [x] Pantalla de consulta de auditoría para equipo de coordinación y superadmin
 
 #### Protecciones básicas de la aplicación web
 `area:seguridad` · `prioridad:alta` · `estimación:S`

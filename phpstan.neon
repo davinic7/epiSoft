@@ -11,13 +11,3 @@ parameters:
         - routes/
 
     level: 7
-
-    ignoreErrors:
-        -
-            # PerteneceAInstitucion es infraestructura reusable (issue #9):
-            # todavía no hay ningún modelo de negocio real que la adopte, solo
-            # la usa un modelo de prueba en tests/ (fuera del análisis de
-            # phpstan). Se cae sola en cuanto el primer modelo de negocio la
-            # use de verdad.
-            identifier: trait.unused
-            path: app/Models/Concerns/PerteneceAInstitucion.php

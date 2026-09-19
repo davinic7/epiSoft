@@ -21,6 +21,12 @@
                             {{ __('Instituciones') }}
                         </flux:sidebar.item>
                     @endif
+
+                    @can('auditoria.ver')
+                        <flux:sidebar.item icon="clipboard-document-list" :href="route('auditoria.index')" :current="request()->routeIs('auditoria.*')" wire:navigate>
+                            {{ __('Auditoría') }}
+                        </flux:sidebar.item>
+                    @endcan
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
