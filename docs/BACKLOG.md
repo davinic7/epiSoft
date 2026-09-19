@@ -40,8 +40,8 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 **Criterios de aceptación**
 
 - [x] Comparar base compartida con institucion_id contra base por institución
-- [ ] Definir cómo se resuelve la institución activa en cada request
-- [ ] Documentar el impacto en backups y en migraciones
+- [x] Definir cómo se resuelve la institución activa en cada request
+- [x] Documentar el impacto en backups y en migraciones
 
 #### Estructura del repositorio y convenciones
 `area:infra` · `prioridad:alta` · `estimación:S`
