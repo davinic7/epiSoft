@@ -89,8 +89,17 @@ it('el equipo de coordinación consulta solo la auditoría de su institución', 
     Livewire::actingAs($coordinador)
         ->test(Index::class)
         ->assertOk()
-        ->assertSee('Institucion #'.$epiA->id)
-        ->assertDontSee('Institucion #'.$epiB->id);
+        ->assertSee('Institución #'.$epiA->id)
+        ->assertDontSee('Institución #'.$epiB->id);
+});
+
+it('muestra el evento y la entidad en español', function () {
+    $registro = new Audit(['event' => 'updated', 'auditable_type' => Institucion::class]);
+
+    expect($registro->etiquetaEvento())->toBe('Modificación')
+        ->and($registro->etiquetaEntidad())->toBe('Institución')
+        ->and((new Audit(['event' => 'acceso', 'auditable_type' => User::class]))->etiquetaEvento())->toBe('Acceso')
+        ->and((new Audit(['event' => 'created', 'auditable_type' => User::class]))->etiquetaEntidad())->toBe('Usuario');
 });
 
 it('los demás roles no acceden a la auditoría', function () {
