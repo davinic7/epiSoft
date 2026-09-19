@@ -30,16 +30,16 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] Documentar 2-3 opciones con pros y contras
-- [ ] Registrar la decisión y sus consecuencias en docs/adr/001-stack.md
-- [ ] Marcar el ADR como Aceptado antes de escribir código de aplicación
+- [x] Documentar 2-3 opciones con pros y contras
+- [x] Registrar la decisión y sus consecuencias en docs/adr/001-stack.md
+- [x] Marcar el ADR como Aceptado antes de escribir código de aplicación
 
 #### ADR-002: estrategia de multi-institución
 `area:core` · `prioridad:alta` · `estimación:M`
 
 **Criterios de aceptación**
 
-- [ ] Comparar base compartida con institucion_id contra base por institución
+- [x] Comparar base compartida con institucion_id contra base por institución
 - [ ] Definir cómo se resuelve la institución activa en cada request
 - [ ] Documentar el impacto en backups y en migraciones
 
@@ -58,7 +58,7 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 **Criterios de aceptación**
 
 - [ ] Un solo comando levanta la app y la base de datos
-- [ ] Datos de prueba (seed) de una institución ficticia
+- [x] Datos de prueba (seed) de una institución ficticia
 - [ ] Documentado en README para que otra persona lo levante sin ayuda
 
 #### Esquema inicial de base de datos y sistema de migraciones
@@ -66,7 +66,7 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] Migraciones versionadas y aplicables en orden
+- [x] Migraciones versionadas y aplicables en orden
 - [ ] Todas las tablas de negocio llevan institucion_id
 - [ ] Índices en las claves foráneas y en los campos de búsqueda frecuente
 
@@ -75,28 +75,28 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] CRUD de instituciones accesible solo para superadmin
-- [ ] Datos: nombre, dirección, CUIT, referente, capacidad
-- [ ] Al menos una institución cargada por seed
+- [x] CRUD de instituciones accesible solo para superadmin
+- [x] Datos: nombre, dirección, CUIT, referente, capacidad
+- [x] Al menos una institución cargada por seed
 
 #### Autenticación de usuarios
 `area:seguridad` · `prioridad:alta` · `estimación:M`
 
 **Criterios de aceptación**
 
-- [ ] Login y logout con sesión segura
-- [ ] Contraseñas con hash bcrypt o Argon2
-- [ ] Recuperación de contraseña por correo
-- [ ] Bloqueo temporal tras N intentos fallidos
+- [x] Login y logout con sesión segura
+- [x] Contraseñas con hash bcrypt o Argon2
+- [x] Recuperación de contraseña por correo
+- [x] Bloqueo temporal tras N intentos fallidos
 
 #### Modelo de roles y permisos
 `area:seguridad` · `prioridad:alta` · `estimación:L`
 
 **Criterios de aceptación**
 
-- [ ] Roles definidos según cap. 2 de la guía de buenas prácticas: superadmin, equipo de coordinación, encargado de recepción, coordinador pedagógico, educador, encargado de economato, personal de cocina, personal de mantenimiento y limpieza (los equipos itinerantes de la Dirección Provincial quedan fuera, pendientes de modelado propio)
-- [ ] Permisos por módulo y por acción (ver, crear, editar, eliminar)
-- [ ] Un usuario pertenece a una o más instituciones con rol por institución
+- [x] Roles definidos según cap. 2 de la guía de buenas prácticas: superadmin, equipo de coordinación, encargado de recepción, coordinador pedagógico, educador, encargado de economato, personal de cocina, personal de mantenimiento y limpieza (los equipos itinerantes de la Dirección Provincial quedan fuera, pendientes de modelado propio)
+- [x] Permisos por módulo y por acción (ver, crear, editar, eliminar)
+- [x] Un usuario pertenece a una o más instituciones con rol por institución
 
 #### Aislamiento de datos por institución
 `area:seguridad` · `prioridad:alta` · `estimación:L`
@@ -124,7 +124,7 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 - [ ] Tokens CSRF en todos los formularios
 - [ ] Consultas parametrizadas en todo el acceso a datos
 - [ ] Escapado de salida para prevenir XSS
-- [ ] Cabeceras de seguridad configuradas
+- [x] Cabeceras de seguridad configuradas
 
 #### Portar el layout base del prototipo
 `area:ux` · `prioridad:alta` · `estimación:M`
@@ -140,7 +140,7 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] Documento que identifica qué datos sensibles se almacenan y con qué finalidad
+- [x] Documento que identifica qué datos sensibles se almacenan y con qué finalidad
 - [ ] Definido el plazo de conservación y quién accede a cada categoría
 - [ ] Revisado contra la Ley 25.326
 
