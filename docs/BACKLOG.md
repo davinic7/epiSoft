@@ -103,9 +103,9 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] Toda consulta filtra por la institución activa de forma automática
-- [ ] Un usuario no puede acceder a un registro de otra institución ni cambiando el ID en la URL
-- [ ] Prueba automatizada que verifica el aislamiento
+- [x] Toda consulta filtra por la institución activa de forma automática
+- [x] Un usuario no puede acceder a un registro de otra institución ni cambiando el ID en la URL
+- [x] Prueba automatizada que verifica el aislamiento
 
 #### Registro de auditoría
 `area:seguridad` · `prioridad:alta` · `estimación:M`

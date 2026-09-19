@@ -8,6 +8,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -71,6 +72,21 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
     public function instituciones(): BelongsToMany
     {
         return $this->belongsToMany(Institucion::class);
+    }
+
+    /**
+     * Instituciones en las que este usuario puede trabajar: todas para el
+     * superadmin, y solo aquellas en las que está matriculado para el resto.
+     *
+     * @return Builder<Institucion>
+     */
+    public function institucionesAccesibles(): Builder
+    {
+        $instituciones = Institucion::query();
+
+        return $this->is_superadmin
+            ? $instituciones
+            : $instituciones->whereHas('usuarios', fn (Builder $usuarios) => $usuarios->whereKey($this->id));
     }
 
     /**
