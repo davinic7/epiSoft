@@ -52,6 +52,7 @@ No es la aplicación: los datos que muestra son de ejemplo.
 - [Backlog completo](docs/BACKLOG.md)
 - [Decisiones de arquitectura](docs/adr/)
 - [Convenciones de trabajo](CONTRIBUTING.md)
+- [Política de tratamiento de datos personales](docs/politica-tratamiento-datos-personales.md)
 
 ## Datos sensibles
 
