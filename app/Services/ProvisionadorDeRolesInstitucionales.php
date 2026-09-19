@@ -80,6 +80,11 @@ class ProvisionadorDeRolesInstitucionales
             // actuar sobre los vencimientos y riesgos que el resto de los
             // módulos deriva.
             Modulo::Alertas->value => [AccionPermiso::Ver, AccionPermiso::Editar],
+            // Sin equivalente textual en la guía: la consulta de auditoría
+            // la pide el backlog (issue "Registro de auditoría") para el
+            // equipo de coordinación y el superadmin. Solo lectura: el
+            // registro no se edita ni se borra.
+            Modulo::Auditoria->value => [AccionPermiso::Ver],
         ],
         RolInstitucional::EncargadoRecepcion->value => [
             // Conoce a los referentes autorizados a retirar a cada niño y

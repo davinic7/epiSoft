@@ -31,6 +31,7 @@ enum Modulo: string
     case Institucional = 'institucional';
     case Vulneraciones = 'vulneraciones';
     case Alertas = 'alertas';
+    case Auditoria = 'auditoria';
 
     /**
      * Nombre del permiso de spatie para esta acción en este módulo, con la
