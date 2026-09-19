@@ -27,6 +27,33 @@ class Audit extends AuditBase
     }
 
     /**
+     * Nombre en español del evento, para mostrar en pantalla.
+     */
+    public function etiquetaEvento(): string
+    {
+        return match ($this->event) {
+            'created' => __('Alta'),
+            'updated' => __('Modificación'),
+            'deleted' => __('Baja'),
+            'restored' => __('Restauración'),
+            'acceso' => __('Acceso'),
+            default => $this->event,
+        };
+    }
+
+    /**
+     * Nombre en español de la entidad auditada, para mostrar en pantalla.
+     */
+    public function etiquetaEntidad(): string
+    {
+        return match ($this->auditable_type) {
+            Institucion::class => __('Institución'),
+            User::class => __('Usuario'),
+            default => class_basename($this->auditable_type),
+        };
+    }
+
+    /**
      * Usuario que hizo la acción. Complementa user() del paquete, que es un
      * morphTo genérico, con una relación tipada hacia App\Models\User.
      *

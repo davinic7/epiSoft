@@ -30,8 +30,8 @@
                     <flux:table.row wire:key="registro-{{ $registro->id }}">
                         <flux:table.cell>{{ $registro->created_at->format('d/m/Y H:i:s') }}</flux:table.cell>
                         <flux:table.cell>{{ $registro->usuario?->name ?? __('Sistema') }}</flux:table.cell>
-                        <flux:table.cell>{{ $registro->event }}</flux:table.cell>
-                        <flux:table.cell>{{ class_basename($registro->auditable_type) }} #{{ $registro->auditable_id }}</flux:table.cell>
+                        <flux:table.cell>{{ $registro->etiquetaEvento() }}</flux:table.cell>
+                        <flux:table.cell>{{ $registro->etiquetaEntidad() }} #{{ $registro->auditable_id }}</flux:table.cell>
                         <flux:table.cell>{{ $registro->ip_address }}</flux:table.cell>
                     </flux:table.row>
                 @empty
