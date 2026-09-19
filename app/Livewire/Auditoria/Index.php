@@ -42,7 +42,7 @@ class Index extends Component
     public function registros(): LengthAwarePaginator
     {
         return Audit::query()
-            ->with('user')
+            ->with('usuario')
             ->when($this->evento !== '', fn ($consulta) => $consulta->where('event', $this->evento))
             ->latest()
             ->latest('id')

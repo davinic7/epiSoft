@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\PerteneceAInstitucion;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Models\Audit as AuditBase;
 
 /**
@@ -23,5 +24,16 @@ class Audit extends AuditBase
     {
         static::updating(fn (): bool => false);
         static::deleting(fn (): bool => false);
+    }
+
+    /**
+     * Usuario que hizo la acción. Complementa user() del paquete, que es un
+     * morphTo genérico, con una relación tipada hacia App\Models\User.
+     *
+     * @return BelongsTo<User, $this>
+     */
+    public function usuario(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
