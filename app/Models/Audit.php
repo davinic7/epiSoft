@@ -49,6 +49,7 @@ class Audit extends AuditBase
         return match ($this->auditable_type) {
             Institucion::class => __('Institución'),
             User::class => __('Usuario'),
+            Nino::class => __('Niño'),
             default => class_basename($this->auditable_type),
         };
     }
