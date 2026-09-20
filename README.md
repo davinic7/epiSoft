@@ -19,7 +19,27 @@ a varias EPI, con los datos de cada una aislados entre sí.
 
 Laravel 13 (PHP 8.3+) + MySQL/MariaDB. Ver [ADR-001](docs/adr/001-stack.md).
 
-## Levantar el entorno
+## Levantar el entorno con Docker (un solo paso)
+
+Requiere Docker (en Windows, Docker Desktop con WSL 2; los comandos se
+corren dentro de WSL). Usa [Laravel Sail](https://laravel.com/docs/sail):
+app en PHP 8.4 y MySQL 8.4, sin instalar nada más.
+
+```bash
+composer install        # o: docker run --rm -v "$(pwd)":/app -w /app composer install --ignore-platform-reqs
+composer docker:setup   # crea .env, levanta contenedores, migra, siembra y compila assets
+```
+
+La app queda en <http://localhost>. Usuario de prueba del seeder:
+`test@example.com` / `password`. Las credenciales de la base
+(`sail` / `password`, base `episoft`) viven en `compose.yaml`, son solo de
+desarrollo, y pisan las de `.env` dentro del contenedor.
+
+Uso diario: `vendor/bin/sail up -d`, `vendor/bin/sail down`,
+`vendor/bin/sail artisan ...`, `vendor/bin/sail composer run types:check`.
+Los tests corren en SQLite en memoria (`sail artisan test`).
+
+## Levantar el entorno sin Docker
 
 ```bash
 composer install
