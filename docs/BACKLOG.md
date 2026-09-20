@@ -121,9 +121,9 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] Tokens CSRF en todos los formularios
-- [ ] Consultas parametrizadas en todo el acceso a datos
-- [ ] Escapado de salida para prevenir XSS
+- [x] Tokens CSRF en todos los formularios
+- [x] Consultas parametrizadas en todo el acceso a datos
+- [x] Escapado de salida para prevenir XSS
 - [x] Cabeceras de seguridad configuradas
 
 #### Portar el layout base del prototipo
