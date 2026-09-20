@@ -154,9 +154,9 @@ _El núcleo del sistema: legajos, salas, referentes, salud y asistencia diaria._
 **Criterios de aceptación**
 
 - [ ] Formulario en tres pasos como en el prototipo
-- [ ] Validación de DNI único por institución
-- [ ] Edición y consulta del legajo
-- [ ] Listado con paginación
+- [x] Validación de DNI único por institución
+- [x] Edición y consulta del legajo
+- [x] Listado con paginación
 
 #### Salas, turnos y cupos
 `area:ninos` · `prioridad:alta` · `estimación:M`

@@ -30,6 +30,12 @@
                         </flux:sidebar.item>
                     @endcan
 
+                    @can('viewAny', \App\Models\Nino::class)
+                        <flux:sidebar.item icon="user-group" :href="route('ninos.index')" :current="request()->routeIs('ninos.*')" wire:navigate>
+                            {{ __('Niños') }}
+                        </flux:sidebar.item>
+                    @endcan
+
                     @can('auditoria.ver')
                         <flux:sidebar.item icon="clipboard-document-list" :href="route('auditoria.index')" :current="request()->routeIs('auditoria.*')" wire:navigate>
                             {{ __('Auditoría') }}
