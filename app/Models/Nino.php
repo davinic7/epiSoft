@@ -27,12 +27,17 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property int|null $sala_id
  * @property Carbon $fecha_ingreso
  * @property string|null $observaciones
+ * @property Carbon|null $fecha_baja
+ * @property string|null $motivo_baja
  */
 class Nino extends Model implements Auditable
 {
     /** @use HasFactory<NinoFactory> */
     use AuditaCambios, HasFactory, PerteneceAInstitucion, SoftDeletes;
 
+    // fecha_baja y motivo_baja no son mass-assignable a propósito: solo se
+    // fijan a través de darDeBaja(), nunca desde un formulario genérico
+    // (ver Formulario), para que una baja siempre quede con motivo y fecha.
     protected $fillable = [
         'nombres',
         'apellidos',
@@ -54,7 +59,32 @@ class Nino extends Model implements Auditable
         return [
             'fecha_nacimiento' => 'date',
             'fecha_ingreso' => 'date',
+            'fecha_baja' => 'date',
         ];
+    }
+
+    /**
+     * Baja lógica con motivo y fecha: deja constancia de por qué y cuándo
+     * egresó antes de aplicar el soft delete, para que el historial sea
+     * consultable (ver Ninos\Index, filtro de estado).
+     */
+    public function darDeBaja(string $motivo, Carbon $fecha): void
+    {
+        $this->motivo_baja = $motivo;
+        $this->fecha_baja = $fecha;
+        $this->save();
+        $this->delete();
+    }
+
+    /**
+     * Restaura a un niño dado de baja y limpia el motivo y la fecha.
+     */
+    public function restaurar(): void
+    {
+        $this->restore();
+        $this->motivo_baja = null;
+        $this->fecha_baja = null;
+        $this->save();
     }
 
     /**

@@ -239,18 +239,18 @@ no existe.
 - [x] Filtros por sala, turno y estado⁴
 - [x] Los filtros se conservan al navegar (`#[Url]`, como en auditoría)
 
-⁴ "Estado" usa el soft delete que ya tenía `Nino` (activos por defecto,
-de baja, o todos); todavía no hay una acción de baja en la interfaz,
-eso es la historia "Egreso y baja de niños".
+⁴ "Estado" usa el soft delete que ya tenía `Nino` (activos por
+defecto, de baja, o todos). La acción de baja en sí se agregó después,
+en la historia "Egreso y baja de niños".
 
 #### Egreso y baja de niños
 `area:ninos` · `prioridad:media` · `estimación:S`
 
 **Criterios de aceptación**
 
-- [ ] Baja lógica con motivo y fecha
-- [ ] Los niños dados de baja no aparecen en listados activos
-- [ ] Historial consultable
+- [x] Baja lógica con motivo y fecha
+- [x] Los niños dados de baja no aparecen en listados activos
+- [x] Historial consultable (filtro "De baja"/"Todos" del listado, con motivo y fecha; restaurable)
 
 #### Importación inicial de datos existentes
 `area:ninos` · `prioridad:baja` · `estimación:M`

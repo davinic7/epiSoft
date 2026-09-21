@@ -2,16 +2,19 @@
 
 namespace App\Livewire\Ninos;
 
+use App\Concerns\BajaValidationRules;
 use App\Enums\AccionPermiso;
 use App\Enums\Modulo;
 use App\Enums\Turno;
 use App\Models\Nino;
 use App\Models\Sala;
+use Flux\Flux;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
@@ -21,7 +24,13 @@ use Livewire\WithPagination;
 #[Title('Niños')]
 class Index extends Component
 {
-    use AuthorizesRequests, WithPagination;
+    use AuthorizesRequests, BajaValidationRules, WithPagination;
+
+    public ?int $ninoEnBajaId = null;
+
+    public string $motivoBaja = '';
+
+    public string $fechaBaja = '';
 
     #[Url]
     public string $busqueda = '';
@@ -109,6 +118,49 @@ class Index extends Component
     public function turnos(): array
     {
         return Turno::cases();
+    }
+
+    /**
+     * Abre el formulario de baja para un niño.
+     */
+    public function iniciarBaja(int $ninoId): void
+    {
+        $this->authorize(Modulo::Ninos->permiso(AccionPermiso::Eliminar));
+
+        $this->ninoEnBajaId = $ninoId;
+        $this->motivoBaja = '';
+        $this->fechaBaja = now()->format('Y-m-d');
+        $this->resetErrorBag();
+    }
+
+    /**
+     * Confirma la baja lógica con motivo y fecha.
+     */
+    public function guardarBaja(): void
+    {
+        $this->authorize(Modulo::Ninos->permiso(AccionPermiso::Eliminar));
+
+        $datos = $this->validate($this->bajaRules());
+
+        $nino = Nino::findOrFail($this->ninoEnBajaId);
+        $nino->darDeBaja($datos['motivoBaja'], Carbon::parse($datos['fechaBaja']));
+
+        $this->ninoEnBajaId = null;
+        $this->js("\$flux.modal('formulario-baja').close()");
+
+        Flux::toast(variant: 'success', text: __('Niño dado de baja.'));
+    }
+
+    /**
+     * Restaura a un niño dado de baja.
+     */
+    public function restaurar(int $ninoId): void
+    {
+        $this->authorize(Modulo::Ninos->permiso(AccionPermiso::Eliminar));
+
+        Nino::withTrashed()->findOrFail($ninoId)->restaurar();
+
+        Flux::toast(variant: 'success', text: __('Niño restaurado.'));
     }
 
     public function render(): View

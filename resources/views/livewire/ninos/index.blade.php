@@ -74,6 +74,14 @@
                             @endif
                             @if ($nino->trashed())
                                 <flux:badge color="zinc" size="sm">{{ __('De baja') }}</flux:badge>
+                                <div>
+                                    <flux:text size="sm" variant="subtle">
+                                        {{ __('Baja el :fecha — :motivo', [
+                                            'fecha' => $nino->fecha_baja?->format('d/m/Y'),
+                                            'motivo' => $nino->motivo_baja,
+                                        ]) }}
+                                    </flux:text>
+                                </div>
                             @endif
                         </flux:table.cell>
                         <flux:table.cell>{{ $nino->dni }}</flux:table.cell>
@@ -91,15 +99,42 @@
                                     {{ __('Legajo') }}
                                 </flux:button>
 
-                                <flux:button
-                                    size="sm"
-                                    variant="ghost"
-                                    icon="pencil"
-                                    :href="route('ninos.editar', $nino)"
-                                    wire:navigate
-                                >
-                                    {{ __('Editar') }}
-                                </flux:button>
+                                @unless ($nino->trashed())
+                                    <flux:button
+                                        size="sm"
+                                        variant="ghost"
+                                        icon="pencil"
+                                        :href="route('ninos.editar', $nino)"
+                                        wire:navigate
+                                    >
+                                        {{ __('Editar') }}
+                                    </flux:button>
+                                @endunless
+
+                                @can('ninos.eliminar')
+                                    @if ($nino->trashed())
+                                        <flux:button
+                                            size="sm"
+                                            variant="ghost"
+                                            icon="arrow-uturn-left"
+                                            wire:click="restaurar({{ $nino->id }})"
+                                            wire:confirm="{{ __('¿Restaurar a :nombre?', ['nombre' => $nino->nombres]) }}"
+                                        >
+                                            {{ __('Restaurar') }}
+                                        </flux:button>
+                                    @else
+                                        <flux:modal.trigger name="formulario-baja">
+                                            <flux:button
+                                                size="sm"
+                                                variant="ghost"
+                                                icon="arrow-right-start-on-rectangle"
+                                                wire:click="iniciarBaja({{ $nino->id }})"
+                                            >
+                                                {{ __('Dar de baja') }}
+                                            </flux:button>
+                                        </flux:modal.trigger>
+                                    @endif
+                                @endcan
                             </div>
                         </flux:table.cell>
                     </flux:table.row>
@@ -115,4 +150,21 @@
 
         {{ $this->ninos->links() }}
     </div>
+
+    <flux:modal name="formulario-baja" :show="$errors->isNotEmpty()" class="md:w-96">
+        <form wire:submit="guardarBaja" class="space-y-6">
+            <flux:heading size="lg">{{ __('Dar de baja') }}</flux:heading>
+
+            <flux:input wire:model="fechaBaja" :label="__('Fecha de baja')" type="date" />
+            <flux:textarea wire:model="motivoBaja" :label="__('Motivo')" rows="3" />
+
+            <div class="flex justify-end gap-2">
+                <flux:modal.close>
+                    <flux:button variant="filled">{{ __('Cancelar') }}</flux:button>
+                </flux:modal.close>
+
+                <flux:button type="submit" variant="danger">{{ __('Confirmar baja') }}</flux:button>
+            </div>
+        </form>
+    </flux:modal>
 </div>
