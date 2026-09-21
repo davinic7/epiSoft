@@ -24,6 +24,12 @@
                         </flux:sidebar.item>
                     @endif
 
+                    @can('ninos.ver')
+                        <flux:sidebar.item icon="rectangle-group" :href="route('salas.index')" :current="request()->routeIs('salas.*')" wire:navigate>
+                            {{ __('Salas') }}
+                        </flux:sidebar.item>
+                    @endcan
+
                     @can('auditoria.ver')
                         <flux:sidebar.item icon="clipboard-document-list" :href="route('auditoria.index')" :current="request()->routeIs('auditoria.*')" wire:navigate>
                             {{ __('Auditoría') }}
