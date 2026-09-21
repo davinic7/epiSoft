@@ -222,9 +222,13 @@ tocar código, solo ese archivo.
 
 **Criterios de aceptación**
 
-- [ ] Pestañas: datos personales, referentes, salud, asistencia, seguimiento
-- [ ] Carga de los datos reales desde la base
-- [ ] Impresión del legajo completo
+- [x] Pestañas: datos personales, referentes, salud, asistencia, seguimiento³
+- [x] Carga de los datos reales desde la base
+- [x] Impresión del legajo completo (con `window.print()` y CSS `print:`)
+
+³ La pestaña "seguimiento" muestra un aviso de "todavía no disponible":
+el seguimiento pedagógico individual es una historia de M3 que todavía
+no existe.
 
 #### Búsqueda y filtros del listado de niños
 `area:ninos` · `prioridad:media` · `estimación:S`

@@ -26,6 +26,10 @@
                 <flux:button variant="ghost" icon="exclamation-triangle" :href="route('ninos.alergias', $ninoId)" wire:navigate>
                     {{ __('Alergias') }}
                 </flux:button>
+
+                <flux:button variant="ghost" icon="identification" :href="route('ninos.legajo', $ninoId)" wire:navigate>
+                    {{ __('Legajo completo') }}
+                </flux:button>
             @endif
 
             <flux:button variant="ghost" icon="arrow-left" :href="route('ninos.index')" wire:navigate>

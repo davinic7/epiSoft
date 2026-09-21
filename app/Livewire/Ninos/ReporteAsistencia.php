@@ -4,10 +4,9 @@ namespace App\Livewire\Ninos;
 
 use App\Enums\AccionPermiso;
 use App\Enums\Modulo;
-use App\Models\Asistencia;
 use App\Models\Nino;
 use App\Models\Sala;
-use Carbon\CarbonPeriod;
+use App\Services\ReporteDeAsistencia;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -69,29 +68,9 @@ class ReporteAsistencia extends Component
             return null;
         }
 
-        [$inicio, $fin] = $this->rangoDelMes();
+        $nino = Nino::findOrFail($this->ninoId);
 
-        $registros = Asistencia::query()
-            ->where('nino_id', $this->ninoId)
-            ->whereBetween('fecha', [$inicio, $fin])
-            ->get()
-            ->keyBy(fn (Asistencia $registro) => $registro->fecha->format('Y-m-d'));
-
-        $dias = [];
-
-        foreach (CarbonPeriod::create($inicio, $fin) as $dia) {
-            /** @var Carbon $dia */
-            $registro = $registros->get($dia->format('Y-m-d'));
-
-            $dias[] = [
-                'fecha' => $dia,
-                'estado' => $registro === null ? 'sin_registro' : ($registro->presente ? 'presente' : 'ausente'),
-                'hora_ingreso' => $registro?->hora_ingreso,
-                'hora_egreso' => $registro?->hora_egreso,
-            ];
-        }
-
-        return collect($dias);
+        return app(ReporteDeAsistencia::class)->porNino($nino, $this->rangoDelMes()[0]);
     }
 
     /**
@@ -104,7 +83,8 @@ class ReporteAsistencia extends Component
             return null;
         }
 
-        [$inicio, $fin] = $this->rangoDelMes();
+        $mes = $this->rangoDelMes()[0];
+        $servicio = app(ReporteDeAsistencia::class);
 
         $ninos = Nino::query()
             ->where('sala_id', $this->salaId)
@@ -115,13 +95,7 @@ class ReporteAsistencia extends Component
         $filas = [];
 
         foreach ($ninos as $nino) {
-            $registros = $nino->asistencias()->whereBetween('fecha', [$inicio, $fin])->get();
-
-            $filas[] = [
-                'nino' => $nino,
-                'dias_presente' => (int) $registros->where('presente', true)->count(),
-                'dias_registrados' => (int) $registros->count(),
-            ];
+            $filas[] = ['nino' => $nino, ...$servicio->totalesPorNino($nino, $mes)];
         }
 
         return collect($filas);

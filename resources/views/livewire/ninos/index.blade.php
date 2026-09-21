@@ -45,15 +45,27 @@
                         <flux:table.cell>{{ $nino->fecha_nacimiento->format('d/m/Y') }}</flux:table.cell>
                         <flux:table.cell>{{ $nino->sala?->nombre ?? __('Sin asignar') }}</flux:table.cell>
                         <flux:table.cell>
-                            <flux:button
-                                size="sm"
-                                variant="ghost"
-                                icon="pencil"
-                                :href="route('ninos.editar', $nino)"
-                                wire:navigate
-                            >
-                                {{ __('Ver / editar') }}
-                            </flux:button>
+                            <div class="flex gap-2">
+                                <flux:button
+                                    size="sm"
+                                    variant="ghost"
+                                    icon="identification"
+                                    :href="route('ninos.legajo', $nino)"
+                                    wire:navigate
+                                >
+                                    {{ __('Legajo') }}
+                                </flux:button>
+
+                                <flux:button
+                                    size="sm"
+                                    variant="ghost"
+                                    icon="pencil"
+                                    :href="route('ninos.editar', $nino)"
+                                    wire:navigate
+                                >
+                                    {{ __('Editar') }}
+                                </flux:button>
+                            </div>
                         </flux:table.cell>
                     </flux:table.row>
                 @empty
