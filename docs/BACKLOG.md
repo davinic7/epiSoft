@@ -57,9 +57,9 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 **Criterios de aceptación**
 
-- [ ] Un solo comando levanta la app y la base de datos
+- [x] Un solo comando levanta la app y la base de datos
 - [x] Datos de prueba (seed) de una institución ficticia
-- [ ] Documentado en README para que otra persona lo levante sin ayuda
+- [x] Documentado en README para que otra persona lo levante sin ayuda
 
 #### Esquema inicial de base de datos y sistema de migraciones
 `area:core` · `prioridad:alta` · `estimación:L`
@@ -68,7 +68,7 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 
 - [x] Migraciones versionadas y aplicables en orden
 - [ ] Todas las tablas de negocio llevan institucion_id
-- [ ] Índices en las claves foráneas y en los campos de búsqueda frecuente
+- [x] Índices en las claves foráneas y en los campos de búsqueda frecuente
 
 #### Tabla instituciones y alta de institución
 `area:core` · `prioridad:alta` · `estimación:S`

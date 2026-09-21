@@ -1,8 +1,8 @@
 # Pendientes de M0 · Fundaciones
 
-Estado al 2026-09-19. Fuente de verdad de los criterios: [BACKLOG.md](BACKLOG.md).
-M0 tiene **41 criterios**; **31 están cumplidos** (con el PR de tests de
-seguridad mergeado) y **10 faltan**.
+Estado al 2026-09-21. Fuente de verdad de los criterios: [BACKLOG.md](BACKLOG.md).
+M0 tiene **41 criterios**; **34 están cumplidos** (con el comando único de
+Sail y los índices de listado mergeados) y **7 faltan**.
 
 ## Bloqueados por algo externo
 
@@ -13,14 +13,6 @@ seguridad mergeado) y **10 faltan**.
 | Layout: responsive del prototipo conservado | Ídem. |
 | Política de datos: plazo de conservación y quién accede a cada categoría | El plazo post-baja está "pendiente de definir con el organismo" (ver [política](politica-tratamiento-datos-personales.md), sección "Pendiente de definir"). |
 | Política de datos: revisada contra la Ley 25.326 | Requiere revisión con el organismo o asesoría legal. |
-
-## Se pueden hacer ya
-
-| Criterio | Qué hay que hacer |
-|---|---|
-| Un solo comando levanta la app y la base de datos | Hoy el README exige un MySQL/MariaDB local y varios comandos (`composer setup`, `composer dev`). Falta una forma de un solo paso, por ejemplo con contenedores. |
-| Documentado en README para que otra persona lo levante sin ayuda | Se cierra junto con el anterior. Incluir: variables de `.env`, base de datos, seed y usuario de prueba. |
-| Índices en claves foráneas y campos de búsqueda frecuente | Revisar las migraciones existentes; los campos de búsqueda se conocerán mejor con M1. |
 
 ## Esperan a M1 (niños y asistencia)
 
