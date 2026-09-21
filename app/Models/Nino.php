@@ -8,6 +8,7 @@ use Database\Factories\NinoFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -61,5 +62,16 @@ class Nino extends Model implements Auditable
     public function sala(): BelongsTo
     {
         return $this->belongsTo(Sala::class);
+    }
+
+    /**
+     * @return BelongsToMany<Referente, $this, NinoReferente, 'pivot'>
+     */
+    public function referentes(): BelongsToMany
+    {
+        return $this->belongsToMany(Referente::class)
+            ->using(NinoReferente::class)
+            ->withPivot(['parentesco', 'autorizado_a_retirar'])
+            ->withTimestamps();
     }
 }

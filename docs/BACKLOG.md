@@ -179,9 +179,9 @@ sobre el legajo ya creado, en sus propias historias.
 
 **Criterios de aceptación**
 
-- [ ] Alta de referentes con DNI, contacto y parentesco
-- [ ] Un niño puede tener varios referentes y un referente varios niños
-- [ ] Marcado de quién está autorizado a retirar al niño
+- [x] Alta de referentes con DNI, contacto y parentesco
+- [x] Un niño puede tener varios referentes y un referente varios niños
+- [x] Marcado de quién está autorizado a retirar al niño
 
 #### Carnet de vacunación
 `area:ninos` · `prioridad:alta` · `estimación:M`

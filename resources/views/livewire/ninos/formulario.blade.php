@@ -13,9 +13,17 @@
             </flux:subheading>
         </div>
 
-        <flux:button variant="ghost" icon="arrow-left" :href="route('ninos.index')" wire:navigate>
-            {{ __('Volver al listado') }}
-        </flux:button>
+        <div class="flex gap-2">
+            @if ($ninoId)
+                <flux:button variant="ghost" icon="users" :href="route('ninos.referentes', $ninoId)" wire:navigate>
+                    {{ __('Referentes') }}
+                </flux:button>
+            @endif
+
+            <flux:button variant="ghost" icon="arrow-left" :href="route('ninos.index')" wire:navigate>
+                {{ __('Volver al listado') }}
+            </flux:button>
+        </div>
     </div>
 
     <div class="flex gap-2">
