@@ -204,9 +204,9 @@ tocar código, solo ese archivo.
 
 **Criterios de aceptación**
 
-- [ ] Registro por niño con tipo, severidad y observación
-- [ ] Visible de forma destacada en el legajo y en la vista de sala
-- [ ] Consultable desde el módulo de economato
+- [x] Registro por niño con tipo, severidad y observación
+- [x] Visible de forma destacada en el legajo y en la vista de sala (nueva, `salas.ver`)
+- [ ] Consultable desde el módulo de economato — espera a que exista el módulo (M2); `Nino::alergias()` ya queda listo para que economato lo consulte sin cambios de esquema.
 
 #### Asistencia diaria por sala
 `area:ninos` · `prioridad:alta` · `estimación:L`

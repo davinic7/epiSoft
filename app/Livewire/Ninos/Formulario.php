@@ -5,6 +5,7 @@ namespace App\Livewire\Ninos;
 use App\Concerns\NinoValidationRules;
 use App\Enums\AccionPermiso;
 use App\Enums\Modulo;
+use App\Models\Alergia;
 use App\Models\Nino;
 use App\Models\Sala;
 use Flux\Flux;
@@ -96,6 +97,19 @@ class Formulario extends Component
     public function salas(): Collection
     {
         return Sala::query()->orderBy('nombre')->get();
+    }
+
+    /**
+     * @return Collection<int, Alergia>
+     */
+    #[Computed]
+    public function alergias(): Collection
+    {
+        if ($this->ninoId === null) {
+            return new Collection;
+        }
+
+        return Nino::findOrFail($this->ninoId)->alergias;
     }
 
     /**

@@ -83,4 +83,12 @@ class Nino extends Model implements Auditable
     {
         return $this->hasMany(VacunaAplicada::class);
     }
+
+    /**
+     * @return HasMany<Alergia, $this>
+     */
+    public function alergias(): HasMany
+    {
+        return $this->hasMany(Alergia::class);
+    }
 }

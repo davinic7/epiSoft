@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Ninos\Alergias;
 use App\Livewire\Ninos\Formulario;
 use App\Livewire\Ninos\Index;
 use App\Livewire\Ninos\Referentes;
@@ -14,4 +15,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('ninos/{nino}/editar', Formulario::class)->name('ninos.editar');
     Route::livewire('ninos/{nino}/referentes', Referentes::class)->name('ninos.referentes');
     Route::livewire('ninos/{nino}/vacunas', Vacunas::class)->name('ninos.vacunas');
+    Route::livewire('ninos/{nino}/alergias', Alergias::class)->name('ninos.alergias');
 });

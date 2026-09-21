@@ -31,6 +31,16 @@
                         <flux:table.cell>{{ $sala->capacidad }}</flux:table.cell>
                         <flux:table.cell>
                             <div class="flex gap-2">
+                                <flux:button
+                                    size="sm"
+                                    variant="ghost"
+                                    icon="eye"
+                                    :href="route('salas.ver', $sala)"
+                                    wire:navigate
+                                >
+                                    {{ __('Ver') }}
+                                </flux:button>
+
                                 @can('ninos.editar')
                                     <flux:modal.trigger name="formulario-sala">
                                         <flux:button

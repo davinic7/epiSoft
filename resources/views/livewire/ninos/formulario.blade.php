@@ -22,6 +22,10 @@
                 <flux:button variant="ghost" icon="beaker" :href="route('ninos.vacunas', $ninoId)" wire:navigate>
                     {{ __('Vacunas') }}
                 </flux:button>
+
+                <flux:button variant="ghost" icon="exclamation-triangle" :href="route('ninos.alergias', $ninoId)" wire:navigate>
+                    {{ __('Alergias') }}
+                </flux:button>
             @endif
 
             <flux:button variant="ghost" icon="arrow-left" :href="route('ninos.index')" wire:navigate>
@@ -29,6 +33,23 @@
             </flux:button>
         </div>
     </div>
+
+    @if ($this->alergias->isNotEmpty())
+        <flux:callout
+            variant="danger"
+            icon="exclamation-triangle"
+            :heading="__('Alergias y restricciones alimentarias')"
+        >
+            <ul class="list-inside list-disc">
+                @foreach ($this->alergias as $alergia)
+                    <li>
+                        {{ $alergia->descripcion }}
+                        <span class="capitalize">({{ $alergia->severidad->value }})</span>
+                    </li>
+                @endforeach
+            </ul>
+        </flux:callout>
+    @endif
 
     <div class="flex gap-2">
         @foreach ([1 => __('Identificación'), 2 => __('Domicilio'), 3 => __('Institucional')] as $numero => $etiqueta)
