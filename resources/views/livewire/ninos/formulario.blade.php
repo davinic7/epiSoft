@@ -18,6 +18,10 @@
                 <flux:button variant="ghost" icon="users" :href="route('ninos.referentes', $ninoId)" wire:navigate>
                     {{ __('Referentes') }}
                 </flux:button>
+
+                <flux:button variant="ghost" icon="beaker" :href="route('ninos.vacunas', $ninoId)" wire:navigate>
+                    {{ __('Vacunas') }}
+                </flux:button>
             @endif
 
             <flux:button variant="ghost" icon="arrow-left" :href="route('ninos.index')" wire:navigate>

@@ -67,7 +67,7 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 **Criterios de aceptación**
 
 - [x] Migraciones versionadas y aplicables en orden
-- [ ] Todas las tablas de negocio llevan institucion_id
+- [x] Todas las tablas de negocio llevan institucion_id
 - [x] Índices en las claves foráneas y en los campos de búsqueda frecuente
 
 #### Tabla instituciones y alta de institución
@@ -188,9 +188,16 @@ sobre el legajo ya creado, en sus propias historias.
 
 **Criterios de aceptación**
 
-- [ ] Registro de vacunas aplicadas con fecha
-- [ ] Estado calculado según calendario nacional por edad
-- [ ] Listado de niños con vacunas atrasadas
+- [x] Registro de vacunas aplicadas con fecha
+- [x] Estado calculado según calendario nacional por edad²
+- [x] Listado de niños con vacunas atrasadas
+
+² El calendario (`config/calendario_vacunacion.php`) es un borrador
+armado con conocimiento general del esquema argentino, **sin
+contrastar contra la fuente oficial** del Ministerio de Salud ni
+revisado por personal de salud. Hay que validarlo antes de confiar en
+el estado "atrasada" para decisiones reales; corregirlo no requiere
+tocar código, solo ese archivo.
 
 #### Alergias y restricciones alimentarias
 `area:ninos` · `prioridad:alta` · `estimación:M`

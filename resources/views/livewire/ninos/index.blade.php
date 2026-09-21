@@ -6,11 +6,17 @@
                 <flux:subheading>{{ __('Legajos de niñas y niños de la institución.') }}</flux:subheading>
             </div>
 
-            @can('ninos.crear')
-                <flux:button variant="primary" icon="plus" :href="route('ninos.crear')" wire:navigate>
-                    {{ __('Nuevo legajo') }}
+            <div class="flex gap-2">
+                <flux:button variant="ghost" icon="beaker" :href="route('ninos.vacunas-atrasadas')" wire:navigate>
+                    {{ __('Vacunas atrasadas') }}
                 </flux:button>
-            @endcan
+
+                @can('ninos.crear')
+                    <flux:button variant="primary" icon="plus" :href="route('ninos.crear')" wire:navigate>
+                        {{ __('Nuevo legajo') }}
+                    </flux:button>
+                @endcan
+            </div>
         </div>
 
         <flux:table>
