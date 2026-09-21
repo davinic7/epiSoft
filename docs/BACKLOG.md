@@ -235,9 +235,13 @@ no existe.
 
 **Criterios de aceptación**
 
-- [ ] Búsqueda por nombre, alias y DNI
-- [ ] Filtros por sala, turno y estado
-- [ ] Los filtros se conservan al navegar
+- [x] Búsqueda por nombre, alias y DNI
+- [x] Filtros por sala, turno y estado⁴
+- [x] Los filtros se conservan al navegar (`#[Url]`, como en auditoría)
+
+⁴ "Estado" usa el soft delete que ya tenía `Nino` (activos por defecto,
+de baja, o todos); todavía no hay una acción de baja en la interfaz,
+eso es la historia "Egreso y baja de niños".
 
 #### Egreso y baja de niños
 `area:ninos` · `prioridad:media` · `estimación:S`

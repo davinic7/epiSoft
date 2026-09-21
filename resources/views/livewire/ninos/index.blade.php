@@ -23,6 +23,38 @@
             </div>
         </div>
 
+        <div class="flex flex-wrap items-end gap-4">
+            <flux:input
+                wire:model.live.debounce.400ms="busqueda"
+                :label="__('Buscar')"
+                placeholder="Nombre, alias o DNI"
+                icon="magnifying-glass"
+                class="max-w-64"
+            />
+
+            <flux:select wire:model.live="salaId" :label="__('Sala')" class="max-w-48">
+                <flux:select.option value="">{{ __('Todas') }}</flux:select.option>
+                @foreach ($this->salas as $sala)
+                    <flux:select.option value="{{ $sala->id }}">{{ $sala->nombre }}</flux:select.option>
+                @endforeach
+            </flux:select>
+
+            <flux:select wire:model.live="turno" :label="__('Turno')" class="max-w-40">
+                <flux:select.option value="">{{ __('Todos') }}</flux:select.option>
+                @foreach ($this->turnos as $opcion)
+                    <flux:select.option value="{{ $opcion->value }}" class="capitalize">
+                        {{ $opcion->value }}
+                    </flux:select.option>
+                @endforeach
+            </flux:select>
+
+            <flux:select wire:model.live="estado" :label="__('Estado')" class="max-w-40">
+                <flux:select.option value="activos">{{ __('Activos') }}</flux:select.option>
+                <flux:select.option value="baja">{{ __('De baja') }}</flux:select.option>
+                <flux:select.option value="todos">{{ __('Todos') }}</flux:select.option>
+            </flux:select>
+        </div>
+
         <flux:table>
             <flux:table.columns>
                 <flux:table.column>{{ __('Apellido y nombre') }}</flux:table.column>
@@ -39,6 +71,9 @@
                             {{ $nino->apellidos }}, {{ $nino->nombres }}
                             @if ($nino->alias)
                                 <flux:text class="inline" size="sm" variant="subtle">({{ $nino->alias }})</flux:text>
+                            @endif
+                            @if ($nino->trashed())
+                                <flux:badge color="zinc" size="sm">{{ __('De baja') }}</flux:badge>
                             @endif
                         </flux:table.cell>
                         <flux:table.cell>{{ $nino->dni }}</flux:table.cell>
