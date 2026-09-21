@@ -153,10 +153,17 @@ _El núcleo del sistema: legajos, salas, referentes, salud y asistencia diaria._
 
 **Criterios de aceptación**
 
-- [ ] Formulario en tres pasos como en el prototipo
-- [ ] Validación de DNI único por institución
-- [ ] Edición y consulta del legajo
-- [ ] Listado con paginación
+- [x] Formulario en tres pasos como en el prototipo¹
+- [x] Validación de DNI único por institución
+- [x] Edición y consulta del legajo
+- [x] Listado con paginación
+
+¹ El prototipo HTML no está en el repositorio (ver "Layout" en
+[PENDIENTES-M0.md](PENDIENTES-M0.md)), así que los tres pasos
+(identificación, domicilio, datos institucionales) son un diseño propio
+basado en los criterios de esta historia, no una copia del prototipo.
+Referentes, salud y vacunas quedan fuera de este alta: se cargan después
+sobre el legajo ya creado, en sus propias historias.
 
 #### Salas, turnos y cupos
 `area:ninos` · `prioridad:alta` · `estimación:M`
