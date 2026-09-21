@@ -7,6 +7,10 @@
             </div>
 
             <div class="flex gap-2">
+                <flux:button variant="ghost" icon="calendar-days" :href="route('ninos.reporte-asistencia')" wire:navigate>
+                    {{ __('Asistencia') }}
+                </flux:button>
+
                 <flux:button variant="ghost" icon="beaker" :href="route('ninos.vacunas-atrasadas')" wire:navigate>
                     {{ __('Vacunas atrasadas') }}
                 </flux:button>

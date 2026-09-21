@@ -213,9 +213,9 @@ tocar código, solo ese archivo.
 
 **Criterios de aceptación**
 
-- [ ] Toma de asistencia del día por sala y turno
-- [ ] Registro de quién retira al niño
-- [ ] Reporte mensual de asistencia por niño y por sala
+- [x] Toma de asistencia del día por sala y turno (el turno ya es propio de la sala, ver `Turno`)
+- [x] Registro de quién retira al niño (limitado a sus referentes autorizados a retirar)
+- [x] Reporte mensual de asistencia por niño y por sala
 
 #### Vista de legajo con pestañas
 `area:ninos` · `prioridad:media` · `estimación:M`

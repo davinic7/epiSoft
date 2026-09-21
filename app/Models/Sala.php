@@ -8,6 +8,7 @@ use App\Models\Concerns\PerteneceAInstitucion;
 use Database\Factories\SalaFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -33,5 +34,13 @@ class Sala extends Model implements Auditable
             'turno' => Turno::class,
             'capacidad' => 'integer',
         ];
+    }
+
+    /**
+     * @return HasMany<Asistencia, $this>
+     */
+    public function asistencias(): HasMany
+    {
+        return $this->hasMany(Asistencia::class);
     }
 }

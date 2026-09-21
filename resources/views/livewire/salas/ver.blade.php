@@ -11,9 +11,15 @@
             </flux:subheading>
         </div>
 
-        <flux:button variant="ghost" icon="arrow-left" :href="route('salas.index')" wire:navigate>
-            {{ __('Volver a salas') }}
-        </flux:button>
+        <div class="flex gap-2">
+            <flux:button variant="primary" icon="clipboard-document-check" :href="route('salas.asistencia', $this->sala)" wire:navigate>
+                {{ __('Tomar asistencia') }}
+            </flux:button>
+
+            <flux:button variant="ghost" icon="arrow-left" :href="route('salas.index')" wire:navigate>
+                {{ __('Volver a salas') }}
+            </flux:button>
+        </div>
     </div>
 
     <flux:table>
