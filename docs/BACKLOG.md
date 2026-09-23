@@ -399,9 +399,20 @@ actualizar la ubicación actual deja el movimiento anterior→nueva en
 
 **Criterios de aceptación**
 
-- [ ] Consumo por artículo y por período
-- [ ] Comparación entre períodos
-- [ ] Exportación a planilla
+- [x] Consumo por artículo y por período¹⁵
+- [x] Comparación entre períodos
+- [x] Exportación a planilla¹⁶
+
+¹⁵ "Consumo" es neto: salidas del período menos las entradas que
+anulan una salida (`anula_a_id`), para no contar como consumo una
+salida que se corrigió con un contramovimiento en el mismo período. No
+intenta reatribuir una anulación a un período distinto del de la
+entrada que la registra: es una simplificación razonable para un
+reporte de prioridad baja, no una historia de contabilidad exacta.
+
+¹⁶ Solo CSV, mismo criterio que "Importación inicial de datos
+existentes" (ver esa historia más arriba): no hay una librería de
+Excel entre las dependencias del proyecto.
 
 #### Cierre mensual de economato
 `area:economato` · `prioridad:baja` · `estimación:S`

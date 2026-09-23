@@ -6,6 +6,7 @@ use App\Livewire\Economato\Index;
 use App\Livewire\Economato\MenuEditor;
 use App\Livewire\Economato\Menus;
 use App\Livewire\Economato\Movimientos;
+use App\Livewire\Economato\ReporteDeConsumo;
 use App\Livewire\Economato\ReporteDeInventario;
 use App\Livewire\Economato\RestriccionesPorSala;
 use App\Livewire\Economato\Stock;
@@ -21,4 +22,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('economato/restricciones-por-sala', RestriccionesPorSala::class)->name('economato.restricciones-por-sala.index');
     Route::livewire('economato/bienes', Bienes::class)->name('economato.bienes.index');
     Route::livewire('economato/inventario', ReporteDeInventario::class)->name('economato.inventario.index');
+    Route::livewire('economato/reporte-de-consumo', ReporteDeConsumo::class)->name('economato.reporte-de-consumo.index');
 });

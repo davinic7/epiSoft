@@ -27,6 +27,10 @@
                     {{ __('Inventario') }}
                 </flux:button>
 
+                <flux:button variant="ghost" icon="chart-bar" :href="route('economato.reporte-de-consumo.index')" wire:navigate>
+                    {{ __('Consumo') }}
+                </flux:button>
+
                 @can('economato.crear')
                     <flux:modal.trigger name="formulario-articulo">
                         <flux:button variant="primary" icon="plus" wire:click="nuevo">
