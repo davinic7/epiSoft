@@ -419,9 +419,24 @@ Excel entre las dependencias del proyecto.
 
 **Criterios de aceptación**
 
-- [ ] Bloqueo de movimientos de períodos cerrados
-- [ ] Reporte de cierre con saldos iniciales y finales
-- [ ] Solo el equipo de coordinación puede reabrir un período
+- [x] Bloqueo de movimientos de períodos cerrados¹⁷
+- [x] Reporte de cierre con saldos iniciales y finales
+- [x] Solo el equipo de coordinación puede reabrir un período¹⁸
+
+¹⁷ Se valida en el mismo lugar que las demás reglas de un movimiento
+(`MovimientoDeStockValidationRules`): un ingreso, una salida o un
+contramovimiento (anular) con fecha dentro de un período cerrado se
+rechaza. `CierreMensual::estaCerradoParaFecha()` es la única fuente de
+verdad, consultada desde Stock y Movimientos.
+
+¹⁸ Igual que la aprobación del menú semanal: `economato.editar` no
+alcanza porque también lo tiene el encargado de economato (que es
+quien suele cerrar el período). Reabrir exige el rol equipo de
+coordinación por `hasRole()`, no el permiso. Un cierre no se reescribe
+al reabrirse ni al volver a cerrarse: reabrir marca la fila existente
+(`reabierto_por_id`, `reabierto_en`) y volver a cerrar ese mismo
+período crea una fila nueva, para no perder el historial de cuándo se
+reabrió y quién lo hizo.
 
 ### M3 · Pedagógico
 

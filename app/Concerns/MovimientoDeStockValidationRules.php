@@ -3,8 +3,11 @@
 namespace App\Concerns;
 
 use App\Models\Articulo;
+use App\Models\CierreMensual;
 use App\Support\InstitucionContext;
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 trait MovimientoDeStockValidationRules
@@ -17,7 +20,7 @@ trait MovimientoDeStockValidationRules
      * activa se agrega a mano para no aceptar un artículo de otra
      * institución.
      *
-     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
+     * @return array<string, array<int, ValidationRule|Closure|array<mixed>|string>>
      */
     protected function ingresoRules(): array
     {
@@ -28,7 +31,7 @@ trait MovimientoDeStockValidationRules
             ],
             'fechaVencimiento' => ['required', 'date'],
             'cantidad' => ['required', 'numeric', 'min:0.01'],
-            'fecha' => ['required', 'date', 'before_or_equal:today'],
+            'fecha' => ['required', 'date', 'before_or_equal:today', $this->reglaPeriodoAbierto()],
             'origen' => ['required', 'string', 'max:255'],
             'contraparte' => ['required', 'string', 'max:255'],
         ];
@@ -40,7 +43,7 @@ trait MovimientoDeStockValidationRules
      * (depende de los lotes vigentes al momento de guardar, no es una regla
      * estática de formulario).
      *
-     * @return array<string, array<int, ValidationRule|array<mixed>|string>>
+     * @return array<string, array<int, ValidationRule|Closure|array<mixed>|string>>
      */
     protected function salidaRules(): array
     {
@@ -50,9 +53,22 @@ trait MovimientoDeStockValidationRules
                 Rule::exists(Articulo::class, 'id')->where('institucion_id', app(InstitucionContext::class)->id()),
             ],
             'cantidad' => ['required', 'numeric', 'min:0.01'],
-            'fecha' => ['required', 'date', 'before_or_equal:today'],
+            'fecha' => ['required', 'date', 'before_or_equal:today', $this->reglaPeriodoAbierto()],
             'origen' => ['required', 'string', 'max:255'],
             'contraparte' => ['required', 'string', 'max:255'],
         ];
+    }
+
+    /**
+     * Rechaza una fecha dentro de un período ya cerrado (ver
+     * CierreMensual::estaCerradoParaFecha()).
+     */
+    private function reglaPeriodoAbierto(): Closure
+    {
+        return function (string $atributo, mixed $valor, Closure $falla): void {
+            if (CierreMensual::estaCerradoParaFecha(Carbon::parse((string) $valor))) {
+                $falla(__('Ese período de economato está cerrado.'));
+            }
+        };
     }
 }

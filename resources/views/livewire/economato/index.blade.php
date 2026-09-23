@@ -31,6 +31,10 @@
                     {{ __('Consumo') }}
                 </flux:button>
 
+                <flux:button variant="ghost" icon="lock-closed" :href="route('economato.cierres-mensuales.index')" wire:navigate>
+                    {{ __('Cierres') }}
+                </flux:button>
+
                 @can('economato.crear')
                     <flux:modal.trigger name="formulario-articulo">
                         <flux:button variant="primary" icon="plus" wire:click="nuevo">

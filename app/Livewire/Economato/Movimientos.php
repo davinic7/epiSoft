@@ -7,6 +7,7 @@ use App\Enums\AccionPermiso;
 use App\Enums\Modulo;
 use App\Enums\TipoMovimientoStock;
 use App\Models\Articulo;
+use App\Models\CierreMensual;
 use App\Models\Lote;
 use App\Models\MovimientoStock;
 use Flux\Flux;
@@ -164,6 +165,12 @@ class Movimientos extends Component
 
         if ($movimiento->tipo === TipoMovimientoStock::Entrada && $movimiento->lote->stockActual() < (float) $movimiento->cantidad) {
             Flux::toast(variant: 'danger', text: __('No se puede anular: parte de este ingreso ya se usó en una salida.'));
+
+            return;
+        }
+
+        if (CierreMensual::estaCerradoParaFecha(Carbon::today())) {
+            Flux::toast(variant: 'danger', text: __('No se puede anular: el período de hoy está cerrado.'));
 
             return;
         }
