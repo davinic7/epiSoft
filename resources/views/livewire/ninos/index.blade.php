@@ -16,6 +16,10 @@
                 </flux:button>
 
                 @can('ninos.crear')
+                    <flux:button variant="ghost" icon="arrow-up-tray" :href="route('ninos.importar')" wire:navigate>
+                        {{ __('Importar') }}
+                    </flux:button>
+
                     <flux:button variant="primary" icon="plus" :href="route('ninos.crear')" wire:navigate>
                         {{ __('Nuevo legajo') }}
                     </flux:button>

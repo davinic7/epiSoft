@@ -257,9 +257,17 @@ en la historia "Egreso y baja de niños".
 
 **Criterios de aceptación**
 
-- [ ] Carga desde planilla con los legajos actuales
-- [ ] Reporte de filas rechazadas con el motivo
-- [ ] Proceso repetible sin duplicar registros
+- [x] Carga desde planilla con los legajos actuales⁵
+- [x] Reporte de filas rechazadas con el motivo
+- [x] Proceso repetible sin duplicar registros
+
+⁵ Solo CSV, no `.xlsx`: el proyecto no tiene una librería de lectura de
+Excel entre sus dependencias y agregarla requiere aprobación (ver
+CLAUDE.md, "no cambiar dependencias sin aprobación"). Cualquier planilla
+real se puede exportar a CSV desde Excel, Google Sheets o LibreOffice.
+Cada fila se valida por separado (una fila con errores no impide
+importar el resto) y una fila cuyo DNI ya existe en la institución
+(activo o dado de baja) se rechaza en vez de duplicar el registro.
 
 ### M2 · Economato
 
