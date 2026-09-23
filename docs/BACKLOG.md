@@ -385,9 +385,14 @@ mínimo necesario —sala, niño/a, alergia— sin dar acceso al legajo.
 
 **Criterios de aceptación**
 
-- [ ] Alta de bien con código, ubicación y estado de conservación
-- [ ] Registro de movimientos de ubicación
-- [ ] Reporte de inventario por ubicación
+- [x] Alta de bien con código, ubicación y estado de conservación
+- [x] Registro de movimientos de ubicación¹⁴
+- [x] Reporte de inventario por ubicación
+
+¹⁴ La ubicación de un bien no se edita desde el formulario general:
+cambiarla es la acción "Mover" (`Bien::moverA()`), que además de
+actualizar la ubicación actual deja el movimiento anterior→nueva en
+`movimientos_de_ubicacion`.
 
 #### Reportes de consumo
 `area:economato` · `prioridad:baja` · `estimación:M`

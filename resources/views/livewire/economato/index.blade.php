@@ -23,6 +23,10 @@
                     {{ __('Menús') }}
                 </flux:button>
 
+                <flux:button variant="ghost" icon="map-pin" :href="route('economato.bienes.index')" wire:navigate>
+                    {{ __('Inventario') }}
+                </flux:button>
+
                 @can('economato.crear')
                     <flux:modal.trigger name="formulario-articulo">
                         <flux:button variant="primary" icon="plus" wire:click="nuevo">
