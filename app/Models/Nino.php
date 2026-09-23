@@ -1,0 +1,132 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Concerns\AuditaCambios;
+use App\Models\Concerns\PerteneceAInstitucion;
+use Database\Factories\NinoFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
+
+/**
+ * @property int $id
+ * @property int $institucion_id
+ * @property string $nombres
+ * @property string $apellidos
+ * @property string|null $alias
+ * @property string $dni
+ * @property Carbon $fecha_nacimiento
+ * @property string|null $lugar_nacimiento
+ * @property string $domicilio
+ * @property int|null $sala_id
+ * @property Carbon $fecha_ingreso
+ * @property string|null $observaciones
+ * @property Carbon|null $fecha_baja
+ * @property string|null $motivo_baja
+ */
+class Nino extends Model implements Auditable
+{
+    /** @use HasFactory<NinoFactory> */
+    use AuditaCambios, HasFactory, PerteneceAInstitucion, SoftDeletes;
+
+    // fecha_baja y motivo_baja no son mass-assignable a propósito: solo se
+    // fijan a través de darDeBaja(), nunca desde un formulario genérico
+    // (ver Formulario), para que una baja siempre quede con motivo y fecha.
+    protected $fillable = [
+        'nombres',
+        'apellidos',
+        'alias',
+        'dni',
+        'fecha_nacimiento',
+        'lugar_nacimiento',
+        'domicilio',
+        'sala_id',
+        'fecha_ingreso',
+        'observaciones',
+    ];
+
+    /**
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'fecha_nacimiento' => 'date',
+            'fecha_ingreso' => 'date',
+            'fecha_baja' => 'date',
+        ];
+    }
+
+    /**
+     * Baja lógica con motivo y fecha: deja constancia de por qué y cuándo
+     * egresó antes de aplicar el soft delete, para que el historial sea
+     * consultable (ver Ninos\Index, filtro de estado).
+     */
+    public function darDeBaja(string $motivo, Carbon $fecha): void
+    {
+        $this->motivo_baja = $motivo;
+        $this->fecha_baja = $fecha;
+        $this->save();
+        $this->delete();
+    }
+
+    /**
+     * Restaura a un niño dado de baja y limpia el motivo y la fecha.
+     */
+    public function restaurar(): void
+    {
+        $this->restore();
+        $this->motivo_baja = null;
+        $this->fecha_baja = null;
+        $this->save();
+    }
+
+    /**
+     * @return BelongsTo<Sala, $this>
+     */
+    public function sala(): BelongsTo
+    {
+        return $this->belongsTo(Sala::class);
+    }
+
+    /**
+     * @return BelongsToMany<Referente, $this, NinoReferente, 'pivot'>
+     */
+    public function referentes(): BelongsToMany
+    {
+        return $this->belongsToMany(Referente::class)
+            ->using(NinoReferente::class)
+            ->withPivot(['parentesco', 'autorizado_a_retirar'])
+            ->withTimestamps();
+    }
+
+    /**
+     * @return HasMany<VacunaAplicada, $this>
+     */
+    public function vacunasAplicadas(): HasMany
+    {
+        return $this->hasMany(VacunaAplicada::class);
+    }
+
+    /**
+     * @return HasMany<Alergia, $this>
+     */
+    public function alergias(): HasMany
+    {
+        return $this->hasMany(Alergia::class);
+    }
+
+    /**
+     * @return HasMany<Asistencia, $this>
+     */
+    public function asistencias(): HasMany
+    {
+        return $this->hasMany(Asistencia::class);
+    }
+}

@@ -1,8 +1,11 @@
 # Pendientes de M0 · Fundaciones
 
-Estado al 2026-09-19. Fuente de verdad de los criterios: [BACKLOG.md](BACKLOG.md).
-M0 tiene **41 criterios**; **31 están cumplidos** (con el PR de tests de
-seguridad mergeado) y **10 faltan**.
+Estado al 2026-09-21. Fuente de verdad de los criterios: [BACKLOG.md](BACKLOG.md).
+M0 tiene **41 criterios**; **36 están cumplidos** (los dos que esperaban a
+M1 —niños— ya se cumplen: `Nino`, `Referente` y `VacunaAplicada` llevan
+`institucion_id` vía `PerteneceAInstitucion`, y `Nino` llama a
+`registrarAcceso()` cada vez que se abre un legajo) y **5 faltan**, todos
+bloqueados por algo externo.
 
 ## Bloqueados por algo externo
 
@@ -13,21 +16,6 @@ seguridad mergeado) y **10 faltan**.
 | Layout: responsive del prototipo conservado | Ídem. |
 | Política de datos: plazo de conservación y quién accede a cada categoría | El plazo post-baja está "pendiente de definir con el organismo" (ver [política](politica-tratamiento-datos-personales.md), sección "Pendiente de definir"). |
 | Política de datos: revisada contra la Ley 25.326 | Requiere revisión con el organismo o asesoría legal. |
-
-## Se pueden hacer ya
-
-| Criterio | Qué hay que hacer |
-|---|---|
-| Un solo comando levanta la app y la base de datos | Hoy el README exige un MySQL/MariaDB local y varios comandos (`composer setup`, `composer dev`). Falta una forma de un solo paso, por ejemplo con contenedores. |
-| Documentado en README para que otra persona lo levante sin ayuda | Se cierra junto con el anterior. Incluir: variables de `.env`, base de datos, seed y usuario de prueba. |
-| Índices en claves foráneas y campos de búsqueda frecuente | Revisar las migraciones existentes; los campos de búsqueda se conocerán mejor con M1. |
-
-## Esperan a M1 (niños y asistencia)
-
-| Criterio | Por qué espera |
-|---|---|
-| Todas las tablas de negocio llevan `institucion_id` | Todavía no hay tablas de negocio. El trait `PerteneceAInstitucion` ya está listo para usarse. |
-| Se registra todo acceso y modificación a datos sensibles de niños | Todavía no existe el modelo de niños. El modelo debe usar el trait `AuditaCambios` y llamar a `registrarAcceso()` cada vez que un usuario abre un legajo. |
 
 ## Notas para quien siga
 
