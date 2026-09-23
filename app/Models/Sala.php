@@ -43,4 +43,12 @@ class Sala extends Model implements Auditable
     {
         return $this->hasMany(Asistencia::class);
     }
+
+    /**
+     * @return HasMany<Nino, $this>
+     */
+    public function ninos(): HasMany
+    {
+        return $this->hasMany(Nino::class);
+    }
 }

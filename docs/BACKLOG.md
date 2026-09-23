@@ -364,8 +364,21 @@ decisión desde antes de esta historia. Un menú aprobado no se edita.
 
 **Criterios de aceptación**
 
-- [ ] Al aprobar un menú el sistema advierte qué niños tienen restricción con esos ingredientes
-- [ ] Listado imprimible de restricciones por sala para la cocina
+- [x] Al aprobar un menú el sistema advierte qué niños tienen restricción con esos ingredientes¹²
+- [x] Listado imprimible de restricciones por sala para la cocina¹³
+
+¹² Ni el menú ni la alergia tienen una lista estructurada de
+ingredientes (ambos son texto libre), así que el cruce es una
+coincidencia de texto simple: si la descripción de la alergia aparece
+dentro de la descripción de una casilla, avisa. El aviso se muestra en
+todo momento en el editor del menú (no solo al aprobar) y no bloquea
+la aprobación: el equipo de nutrición decide con esa información.
+
+¹³ Vive en Economato, no en Salas → Ver (que ya mostraba lo mismo
+desde la historia "Alergias y restricciones alimentarias" de M1),
+porque esa pantalla exige `ninos.ver` y el personal de cocina no tiene
+ese permiso (solo `economato.ver`). Esta pantalla nueva expone lo
+mínimo necesario —sala, niño/a, alergia— sin dar acceso al legajo.
 
 #### Inventario patrimonial
 `area:economato` · `prioridad:media` · `estimación:M`

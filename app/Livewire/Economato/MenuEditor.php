@@ -8,12 +8,14 @@ use App\Enums\EquipoTecnicoProvincial;
 use App\Enums\EstadoMenu;
 use App\Enums\Modulo;
 use App\Enums\MomentoComida;
+use App\Models\Alergia;
 use App\Models\ItemDeMenu;
 use App\Models\MenuSemanal;
 use Flux\Flux;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -77,6 +79,42 @@ class MenuEditor extends Component
     public function clave(DiaSemana $dia, MomentoComida $comida): string
     {
         return $dia->value.'|'.$comida->value;
+    }
+
+    /**
+     * Niños cuya alergia o restricción aparece como texto dentro de la
+     * descripción de alguna casilla del menú, para advertir antes de
+     * aprobar. Es una coincidencia de texto simple (no hay una lista
+     * estructurada de ingredientes ni en el menú ni en la alergia), así
+     * que avisa, no bloquea: el equipo de nutrición decide con esa
+     * información.
+     *
+     * @return array<int, array{dia: DiaSemana, comida: MomentoComida, alergia: Alergia}>
+     */
+    #[Computed]
+    public function advertenciasDeAlergias(): array
+    {
+        $alergias = Alergia::query()->with('nino')->get();
+
+        $advertencias = [];
+
+        foreach ($this->dias() as $dia) {
+            foreach ($this->comidas() as $comida) {
+                $descripcion = $this->descripciones[$this->clave($dia, $comida)] ?? '';
+
+                if (trim($descripcion) === '') {
+                    continue;
+                }
+
+                foreach ($alergias as $alergia) {
+                    if (trim($alergia->descripcion) !== '' && mb_stripos($descripcion, $alergia->descripcion) !== false) {
+                        $advertencias[] = ['dia' => $dia, 'comida' => $comida, 'alergia' => $alergia];
+                    }
+                }
+            }
+        }
+
+        return $advertencias;
     }
 
     public function guardar(): void

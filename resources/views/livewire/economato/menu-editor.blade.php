@@ -33,6 +33,23 @@
         </div>
     </div>
 
+    @if ($this->advertenciasDeAlergias !== [])
+        <flux:callout variant="danger" icon="exclamation-triangle" :heading="__('Coincide con alergias o restricciones cargadas')">
+            <ul class="list-inside list-disc">
+                @foreach ($this->advertenciasDeAlergias as $advertencia)
+                    <li>
+                        {{ __(':dia :comida — :nombre: :descripcion', [
+                            'dia' => ucfirst($advertencia['dia']->value),
+                            'comida' => $advertencia['comida']->value,
+                            'nombre' => $advertencia['alergia']->nino->nombres.' '.$advertencia['alergia']->nino->apellidos,
+                            'descripcion' => $advertencia['alergia']->descripcion,
+                        ]) }}
+                    </li>
+                @endforeach
+            </ul>
+        </flux:callout>
+    @endif
+
     <form wire:submit="guardar">
         <div class="overflow-x-auto">
             <table class="min-w-full border-separate border-spacing-2">

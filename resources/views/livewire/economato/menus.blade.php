@@ -11,6 +11,10 @@
                     {{ __('Catálogo') }}
                 </flux:button>
 
+                <flux:button variant="ghost" icon="printer" :href="route('economato.restricciones-por-sala.index')" wire:navigate>
+                    {{ __('Restricciones por sala') }}
+                </flux:button>
+
                 @can('economato.crear')
                     <flux:modal.trigger name="formulario-menu">
                         <flux:button variant="primary" icon="plus" wire:click="nuevo">
