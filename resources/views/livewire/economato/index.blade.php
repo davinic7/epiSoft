@@ -19,6 +19,10 @@
                     {{ __('Alertas') }}
                 </flux:button>
 
+                <flux:button variant="ghost" icon="calendar-days" :href="route('economato.menus.index')" wire:navigate>
+                    {{ __('Menús') }}
+                </flux:button>
+
                 @can('economato.crear')
                     <flux:modal.trigger name="formulario-articulo">
                         <flux:button variant="primary" icon="plus" wire:click="nuevo">

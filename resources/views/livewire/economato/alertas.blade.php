@@ -14,6 +14,10 @@
                 <flux:button variant="ghost" icon="book-open" :href="route('economato.movimientos.index')" wire:navigate>
                     {{ __('Movimientos') }}
                 </flux:button>
+
+                <flux:button variant="ghost" icon="calendar-days" :href="route('economato.menus.index')" wire:navigate>
+                    {{ __('Menús') }}
+                </flux:button>
             </div>
         </div>
 

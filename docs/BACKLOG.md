@@ -343,9 +343,21 @@ El dashboard muestra un resumen (`AlertasDashboard`) para quien tenga
 
 **Criterios de aceptación**
 
-- [ ] Carga del menú por día y por comida
-- [ ] Circuito de aprobación por el rol de nutrición
-- [ ] Historial de menús de semanas anteriores
+- [x] Carga del menú por día y por comida¹⁰
+- [x] Circuito de aprobación por el rol de nutrición¹¹
+- [x] Historial de menús de semanas anteriores
+
+¹⁰ Días lunes a viernes y momentos de alimentación (desayuno, colación,
+almuerzo, merienda reforzada) según la guía, Anexo 1, Ficha 5, pág. 61.
+Un menú nuevo arma las 20 casillas vacías de la semana; cada una se
+edita por separado y no tiene un paso intermedio de envío a revisión.
+
+¹¹ No hay un rol institucional de nutrición (ver ADR-003): aprobar
+exige el rol `EquipoTecnicoProvincial::Nutricion`, chequeado con
+`hasRole()` en vez del permiso `economato.editar` (que también tiene
+el encargado de economato, y no debería poder autoaprobar su propio
+borrador). `ProvisionadorDeRolesProvinciales` ya documentaba esta
+decisión desde antes de esta historia. Un menú aprobado no se edita.
 
 #### Cruce del menú con alergias activas
 `area:economato` · `prioridad:media` · `estimación:M`
