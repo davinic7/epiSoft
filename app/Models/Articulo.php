@@ -8,6 +8,7 @@ use App\Models\Concerns\PerteneceAInstitucion;
 use Database\Factories\ArticuloFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -34,5 +35,13 @@ class Articulo extends Model implements Auditable
             'categoria' => CategoriaArticulo::class,
             'stock_minimo' => 'decimal:2',
         ];
+    }
+
+    /**
+     * @return HasMany<Lote, $this>
+     */
+    public function lotes(): HasMany
+    {
+        return $this->hasMany(Lote::class);
     }
 }

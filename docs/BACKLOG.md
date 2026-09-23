@@ -287,9 +287,17 @@ _Stock por lote, libro de movimientos, menú semanal e inventario patrimonial._
 
 **Criterios de aceptación**
 
-- [ ] Cada ingreso genera un lote con fecha de vencimiento
-- [ ] El stock actual se calcula desde los movimientos, no se edita a mano
-- [ ] Vista de stock por artículo con desglose de lotes
+- [x] Cada ingreso genera un lote con fecha de vencimiento
+- [x] El stock actual se calcula desde los movimientos, no se edita a mano⁶
+- [x] Vista de stock por artículo con desglose de lotes
+
+⁶ El lote no tiene un campo de cantidad editable: cada ingreso crea,
+además del lote, un movimiento de tipo "entrada" (`MovimientoStock`), y
+`Lote::stockActual()` suma sus movimientos en vez de leer un campo. El
+libro de movimientos completo —salidas, consumo del lote que vence
+antes y anulación por contramovimiento— es la próxima historia, "Libro
+de movimientos de entrada y salida"; esta historia ya deja el modelo de
+datos listo para que esa agregue el tipo "salida" sin migrar de nuevo.
 
 #### Libro de movimientos de entrada y salida
 `area:economato` · `prioridad:alta` · `estimación:L`

@@ -6,13 +6,19 @@
                 <flux:subheading>{{ __('Catálogo de artículos e insumos de la institución.') }}</flux:subheading>
             </div>
 
-            @can('economato.crear')
-                <flux:modal.trigger name="formulario-articulo">
-                    <flux:button variant="primary" icon="plus" wire:click="nuevo">
-                        {{ __('Nuevo artículo') }}
-                    </flux:button>
-                </flux:modal.trigger>
-            @endcan
+            <div class="flex gap-2">
+                <flux:button variant="ghost" icon="cube" :href="route('economato.stock.index')" wire:navigate>
+                    {{ __('Stock') }}
+                </flux:button>
+
+                @can('economato.crear')
+                    <flux:modal.trigger name="formulario-articulo">
+                        <flux:button variant="primary" icon="plus" wire:click="nuevo">
+                            {{ __('Nuevo artículo') }}
+                        </flux:button>
+                    </flux:modal.trigger>
+                @endcan
+            </div>
         </div>
 
         <div class="flex flex-wrap items-end gap-4">
