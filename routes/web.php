@@ -13,3 +13,4 @@ require __DIR__.'/instituciones.php';
 require __DIR__.'/auditoria.php';
 require __DIR__.'/salas.php';
 require __DIR__.'/ninos.php';
+require __DIR__.'/economato.php';

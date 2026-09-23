@@ -34,6 +34,12 @@
                         </flux:sidebar.item>
                     @endcan
 
+                    @can('economato.ver')
+                        <flux:sidebar.item icon="archive-box" :href="route('economato.articulos.index')" :current="request()->routeIs('economato.*')" wire:navigate>
+                            {{ __('Economato') }}
+                        </flux:sidebar.item>
+                    @endcan
+
                     @can('auditoria.ver')
                         <flux:sidebar.item icon="clipboard-document-list" :href="route('auditoria.index')" :current="request()->routeIs('auditoria.*')" wire:navigate>
                             {{ __('Auditoría') }}

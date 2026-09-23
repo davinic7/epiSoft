@@ -278,9 +278,9 @@ _Stock por lote, libro de movimientos, menú semanal e inventario patrimonial._
 
 **Criterios de aceptación**
 
-- [ ] Categorías: alimentos, limpieza, librería y pedagogía
-- [ ] Alta de artículo con unidad de medida y stock mínimo
-- [ ] Búsqueda y filtro por categoría
+- [x] Categorías: alimentos, limpieza, librería y pedagogía
+- [x] Alta de artículo con unidad de medida y stock mínimo
+- [x] Búsqueda y filtro por categoría
 
 #### Stock por lote con vencimiento
 `area:economato` · `prioridad:alta` · `estimación:L`
