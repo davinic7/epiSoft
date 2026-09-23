@@ -15,6 +15,10 @@
                     {{ __('Movimientos') }}
                 </flux:button>
 
+                <flux:button variant="ghost" icon="bell-alert" :href="route('economato.alertas.index')" wire:navigate>
+                    {{ __('Alertas') }}
+                </flux:button>
+
                 @can('economato.crear')
                     <flux:modal.trigger name="formulario-ingreso">
                         <flux:button variant="primary" icon="plus" wire:click="nuevoIngreso">

@@ -327,9 +327,16 @@ lote en stock negativo.
 
 **Criterios de aceptación**
 
-- [ ] Aviso configurable de días previos al vencimiento
-- [ ] Aviso cuando el stock cae bajo el mínimo del artículo
-- [ ] Las alertas aparecen en el dashboard
+- [x] Aviso configurable de días previos al vencimiento⁹
+- [x] Aviso cuando el stock cae bajo el mínimo del artículo
+- [x] Las alertas aparecen en el dashboard
+
+⁹ `dias_aviso_vencimiento` es una columna de `instituciones` (default
+30), editable desde Economato → Alertas con permiso `economato.editar`;
+no pasa por el CRUD de instituciones porque ese es exclusivo del
+superadmin (ver `App\Enums\Modulo`, comentario sobre "instituciones").
+El dashboard muestra un resumen (`AlertasDashboard`) para quien tenga
+`economato.ver`; la pantalla completa vive en Economato → Alertas.
 
 #### Menú semanal
 `area:economato` · `prioridad:media` · `estimación:M`

@@ -20,7 +20,7 @@ class Institucion extends Model implements Auditable
 
     protected $table = 'instituciones';
 
-    protected $fillable = ['nombre', 'direccion', 'cuit', 'referente', 'capacidad'];
+    protected $fillable = ['nombre', 'direccion', 'cuit', 'referente', 'capacidad', 'dias_aviso_vencimiento'];
 
     /**
      * Una institución se audita en sí misma, no en la institución activa.
@@ -37,6 +37,7 @@ class Institucion extends Model implements Auditable
     {
         return [
             'capacidad' => 'integer',
+            'dias_aviso_vencimiento' => 'integer',
         ];
     }
 
