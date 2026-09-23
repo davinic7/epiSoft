@@ -11,6 +11,10 @@
                     {{ __('Stock') }}
                 </flux:button>
 
+                <flux:button variant="ghost" icon="book-open" :href="route('economato.movimientos.index')" wire:navigate>
+                    {{ __('Movimientos') }}
+                </flux:button>
+
                 @can('economato.crear')
                     <flux:modal.trigger name="formulario-articulo">
                         <flux:button variant="primary" icon="plus" wire:click="nuevo">

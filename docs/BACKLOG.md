@@ -304,10 +304,23 @@ datos listo para que esa agregue el tipo "salida" sin migrar de nuevo.
 
 **Criterios de aceptación**
 
-- [ ] Registro de movimiento con fecha, artículo, cantidad, origen y quién recibe o entrega
-- [ ] No se permite una salida mayor al stock disponible
-- [ ] Las salidas consumen primero el lote que vence antes
-- [ ] Los movimientos no se editan, se anulan con contramovimiento
+- [x] Registro de movimiento con fecha, artículo, cantidad, origen y quién recibe o entrega⁷
+- [x] No se permite una salida mayor al stock disponible
+- [x] Las salidas consumen primero el lote que vence antes
+- [x] Los movimientos no se editan, se anulan con contramovimiento⁸
+
+⁷ Los ingresos se registran desde la vista de Stock (crean un lote
+nuevo); esta pantalla es el libro completo y donde se registran las
+salidas. "Origen" es de dónde viene una entrada (Dirección Provincial,
+donación) o el destino de una salida (guía, cap. 3.4, pág. 23: "ya sea
+fuera de la institución o para uso interno"); "quién recibe o entrega"
+es un único campo de contraparte, porque cuál de los dos es depende del
+tipo de movimiento.
+
+⁸ Anular crea un movimiento de signo contrario (`anula_a_id` referencia
+al original) en vez de editar o borrar. Anular una entrada se rechaza
+si su lote ya fue consumido por una salida posterior, para no dejar el
+lote en stock negativo.
 
 #### Alertas de vencimiento y stock mínimo
 `area:economato` · `prioridad:alta` · `estimación:S`

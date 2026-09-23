@@ -30,6 +30,8 @@ test('registrar un ingreso crea un lote con su fecha de vencimiento', function (
         ->set('cantidad', '10')
         ->set('fechaVencimiento', Carbon::today()->addMonths(6)->format('Y-m-d'))
         ->set('fecha', Carbon::today()->format('Y-m-d'))
+        ->set('origen', 'Dirección Provincial de Primera Infancia')
+        ->set('contraparte', 'Juan Pérez')
         ->call('registrarIngreso')
         ->assertHasNoErrors();
 
@@ -61,8 +63,10 @@ test('un ingreso exige los campos obligatorios', function () {
         ->set('cantidad', '')
         ->set('fechaVencimiento', '')
         ->set('fecha', '')
+        ->set('origen', '')
+        ->set('contraparte', '')
         ->call('registrarIngreso')
-        ->assertHasErrors(['articuloId', 'cantidad', 'fechaVencimiento', 'fecha']);
+        ->assertHasErrors(['articuloId', 'cantidad', 'fechaVencimiento', 'fecha', 'origen', 'contraparte']);
 });
 
 test('un ingreso no puede usar un artículo de otra institución', function () {
@@ -81,6 +85,8 @@ test('un ingreso no puede usar un artículo de otra institución', function () {
         ->set('cantidad', '10')
         ->set('fechaVencimiento', Carbon::today()->addMonth()->format('Y-m-d'))
         ->set('fecha', Carbon::today()->format('Y-m-d'))
+        ->set('origen', 'Donación')
+        ->set('contraparte', 'Juan Pérez')
         ->call('registrarIngreso')
         ->assertHasErrors(['articuloId']);
 });
@@ -97,12 +103,16 @@ test('dos ingresos del mismo artículo generan lotes separados con su propio ven
         ->set('cantidad', '5')
         ->set('fechaVencimiento', Carbon::today()->addMonth()->format('Y-m-d'))
         ->set('fecha', Carbon::today()->format('Y-m-d'))
+        ->set('origen', 'Donación')
+        ->set('contraparte', 'Juan Pérez')
         ->call('registrarIngreso');
 
     $componente->call('nuevoIngreso', $articulo->id)
         ->set('cantidad', '8')
         ->set('fechaVencimiento', Carbon::today()->addMonths(3)->format('Y-m-d'))
         ->set('fecha', Carbon::today()->format('Y-m-d'))
+        ->set('origen', 'Donación')
+        ->set('contraparte', 'Juan Pérez')
         ->call('registrarIngreso');
 
     expect(Lote::where('articulo_id', $articulo->id)->count())->toBe(2);

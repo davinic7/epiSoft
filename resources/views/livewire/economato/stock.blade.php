@@ -11,6 +11,10 @@
                     {{ __('Catálogo') }}
                 </flux:button>
 
+                <flux:button variant="ghost" icon="book-open" :href="route('economato.movimientos.index')" wire:navigate>
+                    {{ __('Movimientos') }}
+                </flux:button>
+
                 @can('economato.crear')
                     <flux:modal.trigger name="formulario-ingreso">
                         <flux:button variant="primary" icon="plus" wire:click="nuevoIngreso">
@@ -81,6 +85,10 @@
             <flux:input wire:model="fechaVencimiento" :label="__('Fecha de vencimiento')" type="date" />
 
             <flux:input wire:model="fecha" :label="__('Fecha de ingreso')" type="date" />
+
+            <flux:input wire:model="origen" :label="__('Origen')" placeholder="Dirección Provincial de Primera Infancia" />
+
+            <flux:input wire:model="contraparte" :label="__('Quién entrega')" />
 
             <div class="flex justify-end gap-2">
                 <flux:modal.close>

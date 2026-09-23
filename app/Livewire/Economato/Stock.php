@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Economato;
 
-use App\Concerns\IngresoDeLoteValidationRules;
+use App\Concerns\MovimientoDeStockValidationRules;
 use App\Enums\AccionPermiso;
 use App\Enums\Modulo;
 use App\Enums\TipoMovimientoStock;
@@ -27,7 +27,7 @@ use Livewire\WithPagination;
 #[Title('Stock de economato')]
 class Stock extends Component
 {
-    use AuthorizesRequests, IngresoDeLoteValidationRules, WithPagination;
+    use AuthorizesRequests, MovimientoDeStockValidationRules, WithPagination;
 
     public ?int $articuloId = null;
 
@@ -36,6 +36,10 @@ class Stock extends Component
     public string $cantidad = '';
 
     public string $fecha = '';
+
+    public string $origen = '';
+
+    public string $contraparte = '';
 
     public function mount(): void
     {
@@ -90,6 +94,8 @@ class Stock extends Component
         $this->fechaVencimiento = '';
         $this->cantidad = '';
         $this->fecha = now()->format('Y-m-d');
+        $this->origen = '';
+        $this->contraparte = '';
         $this->resetErrorBag();
     }
 
@@ -111,6 +117,8 @@ class Stock extends Component
             'tipo' => TipoMovimientoStock::Entrada,
             'cantidad' => $datos['cantidad'],
             'fecha' => $datos['fecha'],
+            'origen' => $datos['origen'],
+            'contraparte' => $datos['contraparte'],
         ]);
 
         $this->js("\$flux.modal('formulario-ingreso').close()");
