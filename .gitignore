@@ -45,3 +45,6 @@ Thumbs.db
 *.dump
 Homestead.json
 Homestead.yaml
+
+# Configuración local de Claude Code (específica de cada máquina)
+.claude/settings.local.json
