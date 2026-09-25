@@ -163,13 +163,13 @@ _Lo mínimo que una EPI usa todos los días: salas, asistencia de niños, guía 
 
 **Criterios de aceptación**
 
-- [ ] CRUD de salas con nombre libre, descripción, turno y capacidad máxima (cada EPI define cuántas salas tiene, cómo las llama y para qué las usa)
-- [ ] Asignación manual de cada niño a una sala, sin restricción de edad
-- [ ] Aviso (no bloqueo) al superar el cupo de la sala
-- [ ] En la vista de sala se ve la edad de cada niño y el rango de edades real de la sala
-- [ ] Filtro de niños sin sala asignada
-- [ ] Pase de sala en grupo: seleccionar varios niños y moverlos juntos
-- [ ] Solo el equipo de coordinación y el coordinador pedagógico crean salas y asignan niños
+- [x] CRUD de salas con nombre libre, descripción, turno y capacidad máxima (cada EPI define cuántas salas tiene, cómo las llama y para qué las usa)
+- [x] Asignación manual de cada niño a una sala, sin restricción de edad
+- [x] Aviso (no bloqueo) al superar el cupo de la sala
+- [x] En la vista de sala se ve la edad de cada niño y el rango de edades real de la sala
+- [x] Filtro de niños sin sala asignada
+- [x] Pase de sala en grupo: seleccionar varios niños y moverlos juntos
+- [x] Solo el equipo de coordinación y el coordinador pedagógico crean salas y asignan niños
 
 #### Educadoras por sala
 `area:ninos` · `prioridad:alta` · `estimación:S`
