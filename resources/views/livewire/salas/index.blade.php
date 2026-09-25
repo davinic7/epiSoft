@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <flux:heading size="xl">{{ __('Salas') }}</flux:heading>
-                <flux:subheading>{{ __('Salas de la institución, con su turno y su capacidad máxima.') }}</flux:subheading>
+                <flux:subheading>{{ __('Cada EPI arma sus salas, les pone el nombre que quiera y asigna a los niños.') }}</flux:subheading>
             </div>
 
             @can('create', \App\Models\Sala::class)
@@ -19,16 +19,26 @@
             <flux:table.columns>
                 <flux:table.column>{{ __('Nombre') }}</flux:table.column>
                 <flux:table.column>{{ __('Turno') }}</flux:table.column>
-                <flux:table.column>{{ __('Capacidad') }}</flux:table.column>
+                <flux:table.column>{{ __('Niños / capacidad') }}</flux:table.column>
                 <flux:table.column>{{ __('Acciones') }}</flux:table.column>
             </flux:table.columns>
 
             <flux:table.rows>
                 @forelse ($this->salas as $sala)
                     <flux:table.row wire:key="sala-{{ $sala->id }}">
-                        <flux:table.cell>{{ $sala->nombre }}</flux:table.cell>
+                        <flux:table.cell>
+                            <flux:link :href="route('salas.show', $sala)" wire:navigate>{{ $sala->nombre }}</flux:link>
+
+                            @if ($sala->descripcion)
+                                <flux:text size="sm">{{ $sala->descripcion }}</flux:text>
+                            @endif
+                        </flux:table.cell>
                         <flux:table.cell>{{ $sala->turno->etiqueta() }}</flux:table.cell>
-                        <flux:table.cell>{{ $sala->capacidad }}</flux:table.cell>
+                        <flux:table.cell>
+                            <flux:badge size="sm" :color="$sala->superaCupo() ? 'red' : 'zinc'">
+                                {{ $sala->ninos_count }} / {{ $sala->capacidad }}
+                            </flux:badge>
+                        </flux:table.cell>
                         <flux:table.cell>
                             <div class="flex gap-2">
                                 @can('update', $sala)
@@ -77,7 +87,14 @@
                 {{ $salaId ? __('Editar sala') : __('Nueva sala') }}
             </flux:heading>
 
-            <flux:input wire:model="nombre" :label="__('Nombre')" />
+            <flux:input wire:model="nombre" :label="__('Nombre')" :placeholder="__('Por ejemplo: Las Tortuguitas, Sala 1')" />
+
+            <flux:input
+                wire:model="descripcion"
+                :label="__('Descripción')"
+                :description="__('Opcional. Para qué usa la sala esta EPI.')"
+                :placeholder="__('Por ejemplo: bebés lactantes, no deambulantes')"
+            />
 
             <flux:select wire:model="turno" :label="__('Turno')" :placeholder="__('Elegí un turno')">
                 @foreach ($turnos as $opcion)

@@ -5,6 +5,7 @@ use App\Enums\Turno;
 use App\Livewire\Salas\Index;
 use App\Models\Audit;
 use App\Models\Institucion;
+use App\Models\Nino;
 use App\Models\Sala;
 use App\Models\User;
 use App\Support\InstitucionContext;
@@ -54,7 +55,7 @@ test('un rol con permiso ve solo las salas de su institución activa', function 
         ->assertDontSee('Sala Ajena');
 });
 
-test('la política de salas sigue los permisos de niños de cada rol', function (RolInstitucional $rol, array $permitido) {
+test('la política de salas sigue los permisos de salas de cada rol', function (RolInstitucional $rol, array $permitido) {
     $institucion = Institucion::factory()->create();
     $sala = Sala::factory()->for($institucion)->create();
     $usuario = usuarioDeSalasConRol($rol, $institucion);
@@ -65,8 +66,9 @@ test('la política de salas sigue los permisos de niños de cada rol', function 
         ->and($usuario->can('delete', $sala))->toBe($permitido['eliminar']);
 })->with([
     'coordinación' => [RolInstitucional::EquipoCoordinacion, ['ver' => true, 'crear' => true, 'editar' => true, 'eliminar' => true]],
-    'educador' => [RolInstitucional::Educador, ['ver' => true, 'crear' => true, 'editar' => true, 'eliminar' => false]],
-    'coordinador pedagógico' => [RolInstitucional::CoordinadorPedagogico, ['ver' => true, 'crear' => false, 'editar' => false, 'eliminar' => false]],
+    'coordinador pedagógico' => [RolInstitucional::CoordinadorPedagogico, ['ver' => true, 'crear' => true, 'editar' => true, 'eliminar' => false]],
+    'educador' => [RolInstitucional::Educador, ['ver' => true, 'crear' => false, 'editar' => false, 'eliminar' => false]],
+    'recepción' => [RolInstitucional::EncargadoRecepcion, ['ver' => true, 'crear' => false, 'editar' => false, 'eliminar' => false]],
     'mantenimiento' => [RolInstitucional::PersonalMantenimiento, ['ver' => false, 'crear' => false, 'editar' => false, 'eliminar' => false]],
 ]);
 
@@ -77,6 +79,7 @@ test('coordinación crea una sala en la institución activa', function () {
     Livewire::actingAs($usuario)
         ->test(Index::class)
         ->set('nombre', 'Sala Girasoles')
+        ->set('descripcion', 'Bebés lactantes, no deambulantes')
         ->set('turno', Turno::Manana->value)
         ->set('capacidad', 15)
         ->call('guardar')
@@ -86,6 +89,7 @@ test('coordinación crea una sala en la institución activa', function () {
 
     expect($sala->institucion_id)->toBe($institucion->id)
         ->and($sala->nombre)->toBe('Sala Girasoles')
+        ->and($sala->descripcion)->toBe('Bebés lactantes, no deambulantes')
         ->and($sala->turno)->toBe(Turno::Manana)
         ->and($sala->capacidad)->toBe(15);
 });
@@ -178,6 +182,17 @@ test('coordinación elimina una sala', function () {
     Livewire::actingAs($usuario)->test(Index::class)->call('eliminar', $sala->id);
 
     expect(Sala::find($sala->id))->toBeNull();
+});
+
+test('una sala con niños asignados no se puede eliminar', function () {
+    $institucion = Institucion::factory()->create();
+    $sala = Sala::factory()->for($institucion)->create();
+    Nino::factory()->for($institucion)->for($sala)->create();
+    $usuario = usuarioDeSalasConRol(RolInstitucional::EquipoCoordinacion, $institucion);
+
+    Livewire::actingAs($usuario)->test(Index::class)->call('eliminar', $sala->id);
+
+    expect(Sala::find($sala->id))->not->toBeNull();
 });
 
 test('un educador no puede eliminar una sala', function () {

@@ -1,8 +1,10 @@
 <?php
 
 use App\Livewire\Salas\Index;
+use App\Livewire\Salas\Show;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('salas', Index::class)->name('salas.index');
+    Route::livewire('salas/{sala}', Show::class)->name('salas.show');
 });

@@ -15,11 +15,20 @@
             @endcan
         </div>
 
+        <flux:select wire:model.live="filtroSala" :label="__('Sala')" class="max-w-64">
+            <flux:select.option value="">{{ __('Todas') }}</flux:select.option>
+            <flux:select.option value="sin-sala">{{ __('Sin sala asignada') }}</flux:select.option>
+            @foreach ($this->salas as $sala)
+                <flux:select.option :value="$sala->id" wire:key="filtro-sala-{{ $sala->id }}">{{ $sala->nombre }}</flux:select.option>
+            @endforeach
+        </flux:select>
+
         <flux:table>
             <flux:table.columns>
                 <flux:table.column>{{ __('Apellido y nombre') }}</flux:table.column>
                 <flux:table.column>{{ __('DNI') }}</flux:table.column>
                 <flux:table.column>{{ __('Fecha de nacimiento') }}</flux:table.column>
+                <flux:table.column>{{ __('Sala') }}</flux:table.column>
                 <flux:table.column>{{ __('Acciones') }}</flux:table.column>
             </flux:table.columns>
 
@@ -29,6 +38,13 @@
                         <flux:table.cell>{{ $nino->nombreCompleto() }}</flux:table.cell>
                         <flux:table.cell>{{ $nino->dni }}</flux:table.cell>
                         <flux:table.cell>{{ $nino->fecha_nacimiento->format('d/m/Y') }}</flux:table.cell>
+                        <flux:table.cell>
+                            @if ($nino->sala)
+                                {{ $nino->sala->nombre }}
+                            @else
+                                <flux:badge size="sm" color="amber">{{ __('Sin sala') }}</flux:badge>
+                            @endif
+                        </flux:table.cell>
                         <flux:table.cell>
                             <div class="flex gap-2">
                                 <flux:button size="sm" variant="ghost" icon="eye" :href="route('ninos.show', $nino)" wire:navigate>
@@ -64,7 +80,7 @@
                     </flux:table.row>
                 @empty
                     <flux:table.row>
-                        <flux:table.cell colspan="4">
+                        <flux:table.cell colspan="5">
                             <flux:text>{{ __('Todavía no hay legajos cargados.') }}</flux:text>
                         </flux:table.cell>
                     </flux:table.row>

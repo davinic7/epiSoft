@@ -20,11 +20,17 @@ namespace App\Enums;
  * (equipo de coordinación y los equipos técnicos provinciales de abordaje
  * global y trabajo social) y auditoría reforzada (docs/backlog.txt, issue
  * "Módulo de vulneración de derechos").
+ *
+ * "Salas" está separado de "Ninos" porque quién arma las salas y asigna a
+ * los niños (equipo de coordinación junto al coordinador pedagógico) no es
+ * lo mismo que quién carga o edita un legajo (docs/backlog.txt, issue
+ * "Salas con descripción y asignación de niños").
  */
 enum Modulo: string
 {
     case Usuarios = 'usuarios';
     case Ninos = 'ninos';
+    case Salas = 'salas';
     case Economato = 'economato';
     case Pedagogico = 'pedagogico';
     case Rrhh = 'rrhh';
