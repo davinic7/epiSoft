@@ -4,7 +4,7 @@ Sistema de gestión integral para Espacios de Primera Infancia. Despliegue web �
 
 **68 issues** repartidos en 8 milestones. M1 es el producto mínimo viable (MVP): lo que se valida con una EPI piloto antes de sumar módulos.
 
-El archivo `backlog.txt` es la fuente de verdad: editalo y volvé a correr `setup-github-project.sh`.
+El archivo `backlog.txt` es la fuente de verdad (y `milestones.txt` para los milestones): editalo y corré `sync-github-project.sh` para llevar los cambios a GitHub. `setup-github-project.sh` es solo para crear el proyecto desde cero.
 
 
 ## Resumen
