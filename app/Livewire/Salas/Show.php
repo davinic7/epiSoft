@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Salas;
 
+use App\Enums\RolInstitucional;
 use App\Models\Nino;
 use App\Models\Sala;
+use App\Models\User;
 use Flux\Flux;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,9 +15,10 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 /**
- * Vista de una sala: sus niños con la edad de cada uno y, para quien puede
- * editar la sala, la asignación de niños sin sala, el pase de sala en grupo
- * y la quita de la sala. La asignación es libre, sin restricción de edad.
+ * Vista de una sala: sus educadoras y sus niños con la edad de cada uno y,
+ * para quien puede editar la sala, la asignación de educadoras y de niños
+ * sin sala, el pase de sala en grupo y la quita de la sala. La asignación
+ * de niños es libre, sin restricción de edad.
  */
 #[Title('Sala')]
 class Show extends Component
@@ -41,6 +44,13 @@ class Show extends Component
     public array $paraAgregar = [];
 
     public string $busqueda = '';
+
+    /**
+     * Educadoras marcadas en el formulario de asignación.
+     *
+     * @var list<int|string>
+     */
+    public array $educadorasElegidas = [];
 
     /**
      * Mount the component.
@@ -93,6 +103,37 @@ class Show extends Component
     public function otrasSalas(): Collection
     {
         return Sala::query()->whereKeyNot($this->sala->id)->orderBy('nombre')->get();
+    }
+
+    /**
+     * Educadoras de la sala que siguen perteneciendo a la institución: si
+     * una rota a otra EPI, deja de aparecer acá sin tocar el resto.
+     *
+     * @return Collection<int, User>
+     */
+    #[Computed]
+    public function educadoras(): Collection
+    {
+        return $this->sala->educadoras()
+            ->whereHas('instituciones', fn ($query) => $query->whereKey($this->sala->institucion_id))
+            ->orderBy('name')
+            ->get();
+    }
+
+    /**
+     * Personas con rol de educador en la institución activa: las únicas
+     * que se pueden asignar a una sala.
+     *
+     * @return Collection<int, User>
+     */
+    #[Computed]
+    public function educadorasDisponibles(): Collection
+    {
+        return User::query()
+            ->whereHas('instituciones', fn ($query) => $query->whereKey($this->sala->institucion_id))
+            ->role(RolInstitucional::Educador->value)
+            ->orderBy('name')
+            ->get();
     }
 
     /**
@@ -184,6 +225,37 @@ class Show extends Component
         $this->reset('seleccionados');
 
         Flux::toast(variant: 'success', text: __('Niños quitados de la sala.'));
+    }
+
+    /**
+     * Carga en el formulario las educadoras que la sala tiene hoy.
+     */
+    public function editarEducadoras(): void
+    {
+        $this->authorize('update', $this->sala);
+
+        $this->educadorasElegidas = array_map('strval', $this->educadoras->modelKeys());
+    }
+
+    /**
+     * Deja a la sala con exactamente las educadoras marcadas. Solo cambia
+     * esta sala: las demás asignaciones de cada educadora no se tocan.
+     */
+    public function guardarEducadoras(): void
+    {
+        $this->authorize('update', $this->sala);
+
+        $ids = array_values(array_intersect(
+            $this->idsDe($this->educadorasElegidas),
+            $this->educadorasDisponibles->modelKeys(),
+        ));
+
+        $this->sala->auditSync('educadoras', $ids, columns: ['users.id', 'users.name']);
+
+        unset($this->educadoras);
+        $this->js("\$flux.modal('educadoras-sala').close()");
+
+        Flux::toast(variant: 'success', text: __('Educadoras de la sala actualizadas.'));
     }
 
     public function render(): View

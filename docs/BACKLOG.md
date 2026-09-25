@@ -176,9 +176,9 @@ _Lo mínimo que una EPI usa todos los días: salas, asistencia de niños, guía 
 
 **Criterios de aceptación**
 
-- [ ] Una sala puede tener una o más educadoras y una educadora puede estar en más de una sala
-- [ ] La asignación se cambia sin perder datos cuando el personal rota
-- [ ] Solo el equipo de coordinación y el coordinador pedagógico asignan educadoras
+- [x] Una sala puede tener una o más educadoras y una educadora puede estar en más de una sala
+- [x] La asignación se cambia sin perder datos cuando el personal rota
+- [x] Solo el equipo de coordinación y el coordinador pedagógico asignan educadoras
 - [ ] La vista de sala muestra sus educadoras
 
 #### Días y turnos de funcionamiento de cada EPI

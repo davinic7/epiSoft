@@ -26,6 +26,24 @@
             </flux:button>
         </div>
 
+        <div class="flex flex-wrap items-center gap-2">
+            <flux:text>{{ __('Educadoras:') }}</flux:text>
+
+            @forelse ($this->educadoras as $educadora)
+                <flux:badge size="sm" icon="user" wire:key="educadora-{{ $educadora->id }}">{{ $educadora->name }}</flux:badge>
+            @empty
+                <flux:badge size="sm" color="amber">{{ __('Sin educadoras asignadas') }}</flux:badge>
+            @endforelse
+
+            @can('update', $sala)
+                <flux:modal.trigger name="educadoras-sala">
+                    <flux:button size="sm" variant="ghost" icon="pencil" wire:click="editarEducadoras">
+                        {{ __('Cambiar') }}
+                    </flux:button>
+                </flux:modal.trigger>
+            @endcan
+        </div>
+
         @can('update', $sala)
             <div class="flex flex-wrap items-end gap-2">
                 <flux:modal.trigger name="agregar-ninos">
@@ -78,6 +96,36 @@
     </div>
 
     @can('update', $sala)
+        <flux:modal name="educadoras-sala" class="w-full md:w-96">
+            <form wire:submit="guardarEducadoras" class="space-y-6">
+                <div>
+                    <flux:heading size="lg">{{ __('Educadoras de :sala', ['sala' => $sala->nombre]) }}</flux:heading>
+                    <flux:text>{{ __('Marcá quiénes están a cargo de esta sala. Una educadora puede estar en más de una sala.') }}</flux:text>
+                </div>
+
+                <div class="max-h-80 space-y-3 overflow-y-auto">
+                    @forelse ($this->educadorasDisponibles as $educadora)
+                        <flux:checkbox
+                            wire:model="educadorasElegidas"
+                            :value="$educadora->id"
+                            :label="$educadora->name"
+                            wire:key="disponible-{{ $educadora->id }}"
+                        />
+                    @empty
+                        <flux:text>{{ __('No hay personas con rol de educador en esta institución.') }}</flux:text>
+                    @endforelse
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <flux:modal.close>
+                        <flux:button variant="filled">{{ __('Cancelar') }}</flux:button>
+                    </flux:modal.close>
+
+                    <flux:button type="submit" variant="primary">{{ __('Guardar') }}</flux:button>
+                </div>
+            </form>
+        </flux:modal>
+
         <flux:modal name="agregar-ninos" class="w-full md:w-[28rem]">
             <form wire:submit="agregar" class="space-y-6">
                 <div>
