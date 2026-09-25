@@ -54,6 +54,9 @@ class ProvisionadorDeRolesInstitucionales
             // procedimientos de alta, baja y pase institucional (guía,
             // cap. 2, pág. 10-12; cap. 4.2, pág. 27-29).
             Modulo::Ninos->value => [AccionPermiso::Ver, AccionPermiso::Crear, AccionPermiso::Editar, AccionPermiso::Eliminar],
+            // Conformación de grupos (guía, cap. 2, pág. 10-12): arma las
+            // salas y asigna a los niños junto al coordinador pedagógico.
+            Modulo::Salas->value => [AccionPermiso::Ver, AccionPermiso::Crear, AccionPermiso::Editar, AccionPermiso::Eliminar],
             // Responsable del libro de entrada/salida y del libro de
             // economato ante la ausencia del encargado de economato (guía,
             // cap. 3.4 "Documentación institucional general", pág. 23).
@@ -93,11 +96,19 @@ class ProvisionadorDeRolesInstitucionales
             // 58). No edita el legajo: eso es tarea de coordinación y
             // educadoras.
             Modulo::Ninos->value => [AccionPermiso::Ver, AccionPermiso::Crear],
+            // Toma la asistencia diaria agrupada por sala (docs/backlog.txt,
+            // issue "Asistencia diaria de niños"): ve las salas, no las arma.
+            Modulo::Salas->value => [AccionPermiso::Ver],
         ],
         RolInstitucional::CoordinadorPedagogico->value => [
             // Necesita ver el legajo para la valoración preliminar ante
             // desafíos en el desarrollo (guía, cap. 6.2, pág. 46-51).
             Modulo::Ninos->value => [AccionPermiso::Ver],
+            // Coordina a las educadoras de cada sala y arma las salas y la
+            // asignación de niños junto al equipo de coordinación
+            // (docs/backlog.txt, issue "Salas con descripción y asignación
+            // de niños"). Dar de baja una sala queda para coordinación.
+            Modulo::Salas->value => [AccionPermiso::Ver, AccionPermiso::Crear, AccionPermiso::Editar],
             // Acompaña la elaboración de planificaciones e informes de las
             // educadoras, y diseña el plan de acompañamiento institucional
             // (guía, cap. 2.2 y Anexo 1, Ficha 2, pág. 13, 59; cap. 6.2).
@@ -109,6 +120,9 @@ class ProvisionadorDeRolesInstitucionales
             // de registro diario e informes de seguimiento (guía, cap. 2.2
             // y Anexo 1, Ficha 3, pág. 14, 60; Anexo 8, pág. 83).
             Modulo::Ninos->value => [AccionPermiso::Ver, AccionPermiso::Crear, AccionPermiso::Editar],
+            // Ve las salas y quiénes están en cada una; no las arma
+            // (docs/backlog.txt, issue "Educadoras por sala").
+            Modulo::Salas->value => [AccionPermiso::Ver],
             // Planifica e implementa propuestas lúdico-pedagógicas y lleva
             // el libro de registro diario por sala (guía, cap. 2.2 y Anexo
             // 1, Ficha 3, pág. 14, 60).

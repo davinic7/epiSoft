@@ -4,8 +4,10 @@ namespace App\Livewire\Ninos;
 
 use App\Concerns\NinoValidationRules;
 use App\Models\Nino;
+use App\Models\Sala;
 use Flux\Flux;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Computed;
@@ -31,6 +33,12 @@ class Index extends Component
     public string $domicilio = '';
 
     /**
+     * Filtro del listado por sala: vacío para todas, "sin-sala" para los que
+     * todavía no tienen sala o el id de una sala.
+     */
+    public string $filtroSala = '';
+
+    /**
      * Mount the component.
      */
     public function mount(): void
@@ -44,7 +52,30 @@ class Index extends Component
     #[Computed]
     public function ninos(): LengthAwarePaginator
     {
-        return Nino::query()->orderBy('apellido')->orderBy('nombre')->paginate(15);
+        return Nino::query()
+            ->with('sala')
+            ->when($this->filtroSala === 'sin-sala', fn ($query) => $query->whereNull('sala_id'))
+            ->when(ctype_digit($this->filtroSala), fn ($query) => $query->where('sala_id', (int) $this->filtroSala))
+            ->orderBy('apellido')
+            ->orderBy('nombre')
+            ->paginate(15);
+    }
+
+    /**
+     * @return Collection<int, Sala>
+     */
+    #[Computed]
+    public function salas(): Collection
+    {
+        return Sala::query()->orderBy('nombre')->get();
+    }
+
+    /**
+     * Volver a la primera página al cambiar el filtro.
+     */
+    public function updatedFiltroSala(): void
+    {
+        $this->resetPage();
     }
 
     /**

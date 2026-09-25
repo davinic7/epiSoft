@@ -29,6 +29,7 @@ trait SalaValidationRules
                 'max:255',
                 $salaId === null ? $nombreUnico : $nombreUnico->ignore($salaId),
             ],
+            'descripcion' => ['nullable', 'string', 'max:255'],
             'turno' => ['required', Rule::enum(Turno::class)],
             'capacidad' => ['required', 'integer', 'min:1', 'max:200'],
         ];

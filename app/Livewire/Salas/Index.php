@@ -23,6 +23,8 @@ class Index extends Component
 
     public string $nombre = '';
 
+    public string $descripcion = '';
+
     public string $turno = '';
 
     public ?int $capacidad = null;
@@ -41,7 +43,7 @@ class Index extends Component
     #[Computed]
     public function salas(): LengthAwarePaginator
     {
-        return Sala::query()->orderBy('nombre')->paginate(10);
+        return Sala::query()->withCount('ninos')->orderBy('nombre')->paginate(10);
     }
 
     /**
@@ -51,7 +53,7 @@ class Index extends Component
     {
         $this->authorize('create', Sala::class);
 
-        $this->reset(['salaId', 'nombre', 'turno', 'capacidad']);
+        $this->reset(['salaId', 'nombre', 'descripcion', 'turno', 'capacidad']);
         $this->resetErrorBag();
     }
 
@@ -66,6 +68,7 @@ class Index extends Component
 
         $this->salaId = $sala->id;
         $this->nombre = $sala->nombre;
+        $this->descripcion = (string) $sala->descripcion;
         $this->turno = $sala->turno->value;
         $this->capacidad = $sala->capacidad;
         $this->resetErrorBag();
@@ -101,6 +104,12 @@ class Index extends Component
         $sala = Sala::findOrFail($salaId);
 
         $this->authorize('delete', $sala);
+
+        if ($sala->ninos()->exists()) {
+            Flux::toast(variant: 'danger', text: __('La sala :nombre todavía tiene niños asignados. Movelos a otra sala antes de eliminarla.', ['nombre' => $sala->nombre]));
+
+            return;
+        }
 
         $sala->delete();
 

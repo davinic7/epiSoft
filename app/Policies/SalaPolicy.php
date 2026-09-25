@@ -8,33 +8,33 @@ use App\Models\Sala;
 use App\Models\User;
 
 /**
- * Las salas pertenecen al módulo de niños: se autorizan con los permisos
- * ninos.* de la institución activa.
+ * Se autoriza con los permisos salas.* de la institución activa. Asignar o
+ * mover niños entre salas es editar la sala (update).
  */
 class SalaPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->can(Modulo::Ninos->permiso(AccionPermiso::Ver));
+        return $user->can(Modulo::Salas->permiso(AccionPermiso::Ver));
     }
 
     public function view(User $user, Sala $sala): bool
     {
-        return $user->can(Modulo::Ninos->permiso(AccionPermiso::Ver));
+        return $user->can(Modulo::Salas->permiso(AccionPermiso::Ver));
     }
 
     public function create(User $user): bool
     {
-        return $user->can(Modulo::Ninos->permiso(AccionPermiso::Crear));
+        return $user->can(Modulo::Salas->permiso(AccionPermiso::Crear));
     }
 
     public function update(User $user, Sala $sala): bool
     {
-        return $user->can(Modulo::Ninos->permiso(AccionPermiso::Editar));
+        return $user->can(Modulo::Salas->permiso(AccionPermiso::Editar));
     }
 
     public function delete(User $user, Sala $sala): bool
     {
-        return $user->can(Modulo::Ninos->permiso(AccionPermiso::Eliminar));
+        return $user->can(Modulo::Salas->permiso(AccionPermiso::Eliminar));
     }
 }
