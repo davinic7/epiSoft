@@ -1,0 +1,9 @@
+fase|titulo|descripcion|titulo_anterior
+M0|M0 · Fundaciones|Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta que esto cierre.|
+M1|M1 · MVP: salas, asistencia y tablero|Lo mínimo que una EPI usa todos los días: salas, asistencia de niños, guía de buenas prácticas y tablero de Dirección, validado con un piloto real.|M1 · Niños y asistencia
+M2|M2 · Legajo ampliado del niño|Referentes, vacunación, alergias y legajo con pestañas.|
+M3|M3 · Pedagógico|Registro diario, seguimientos, desafíos del desarrollo e informes.|
+M4|M4 · Economato|Stock por lote, libro de movimientos, menú semanal e inventario patrimonial.|M2 · Economato
+M5|M5 · Institucional y alertas|Mapa de riesgos, vulneración de derechos, articulaciones y motor de alertas.|
+M6|M6 · Personal|Postergado: personal, documentación, capacitaciones y horarios. Las licencias quedan fuera de alcance.|M4 · RRHH
+M7|M7 · Endurecimiento|Monitoreo, pruebas, rendimiento, uso en móvil, manual y alta de nuevas EPI.|M6 · Endurecimiento y salida a producción

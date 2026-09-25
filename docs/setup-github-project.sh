@@ -2,8 +2,8 @@
 # ---------------------------------------------------------------
 # Sistema EPI — creación del proyecto en GitHub
 #
-# Crea etiquetas, milestones, el Project (v2) y los 62 issues
-# definidos en backlog.txt.
+# Crea etiquetas, milestones, el Project (v2) y los issues
+# definidos en backlog.txt, con los milestones de milestones.txt.
 #
 # Requisitos: gh CLI autenticado con permisos de repo y project.
 #   gh auth login
@@ -68,32 +68,15 @@ crear_milestone() {
   gh api "repos/$REPO/milestones" -X POST -f title="$1" -f description="$2" >/dev/null 2>&1 \
     && echo "  ok  $1" || echo "  --  $1 (ya existe)"
 }
-crear_milestone "M0 · Fundaciones" \
-  "Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta que esto cierre."
-crear_milestone "M1 · Niños y asistencia" \
-  "El núcleo del sistema: legajos, salas, referentes, salud y asistencia diaria."
-crear_milestone "M2 · Economato" \
-  "Stock por lote, libro de movimientos, menú semanal e inventario patrimonial."
-crear_milestone "M3 · Pedagógico" \
-  "Registro diario, seguimientos, desafíos del desarrollo e informes."
-crear_milestone "M4 · RRHH" \
-  "Personal, documentación con vencimientos, capacitaciones y horarios."
-crear_milestone "M5 · Institucional y alertas" \
-  "Mapa de riesgos, vulneración de derechos, articulaciones y motor de alertas."
-crear_milestone "M6 · Endurecimiento y salida a producción" \
-  "Backups, despliegue, pruebas, rendimiento y capacitación."
+MILESTONES_FILE="$(dirname "$0")/milestones.txt"
+declare -A MS_TITULO
+while IFS='|' read -r fase titulo descripcion _anterior; do
+  [[ "$fase" == "fase" || -z "$fase" ]] && continue
+  MS_TITULO[$fase]="$titulo"
+  crear_milestone "$titulo" "$descripcion"
+done < "$MILESTONES_FILE"
 
-ms_de_fase() {
-  case "$1" in
-    M0) echo "M0 · Fundaciones" ;;
-    M1) echo "M1 · Niños y asistencia" ;;
-    M2) echo "M2 · Economato" ;;
-    M3) echo "M3 · Pedagógico" ;;
-    M4) echo "M4 · RRHH" ;;
-    M5) echo "M5 · Institucional y alertas" ;;
-    M6) echo "M6 · Endurecimiento y salida a producción" ;;
-  esac
-}
+ms_de_fase() { echo "${MS_TITULO[$1]}"; }
 
 # ── 3. Project ──────────────────────────────────────────────────
 echo "==> Project"

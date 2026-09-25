@@ -2,9 +2,9 @@
 
 Sistema de gestión integral para Espacios de Primera Infancia. Despliegue web único, multi-institución.
 
-**62 issues** repartidos en 7 milestones.
+**68 issues** repartidos en 8 milestones. M1 es el producto mínimo viable (MVP): lo que se valida con una EPI piloto antes de sumar módulos.
 
-El archivo `backlog.txt` es la fuente de verdad: editalo y volvé a correr `setup-github-project.sh`.
+El archivo `backlog.txt` es la fuente de verdad (y `milestones.txt` para los milestones): editalo y corré `sync-github-project.sh` para llevar los cambios a GitHub. `setup-github-project.sh` es solo para crear el proyecto desde cero.
 
 
 ## Resumen
@@ -12,12 +12,13 @@ El archivo `backlog.txt` es la fuente de verdad: editalo y volvé a correr `setu
 | Milestone | Issues | Foco |
 |---|---|---|
 | M0 · Fundaciones | 13 | Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta que esto cierre. |
-| M1 · Niños y asistencia | 10 | El núcleo del sistema: legajos, salas, referentes, salud y asistencia diaria. |
-| M2 · Economato | 9 | Stock por lote, libro de movimientos, menú semanal e inventario patrimonial. |
+| M1 · MVP: salas, asistencia y tablero | 14 | Lo mínimo que una EPI usa todos los días: salas, asistencia de niños, guía de buenas prácticas y tablero de Dirección, validado con un piloto real. |
+| M2 · Legajo ampliado del niño | 5 | Referentes, vacunación, alergias y legajo con pestañas. |
 | M3 · Pedagógico | 8 | Registro diario, seguimientos, desafíos del desarrollo e informes. |
-| M4 · RRHH | 6 | Personal, documentación con vencimientos, capacitaciones y horarios. |
+| M4 · Economato | 9 | Stock por lote, libro de movimientos, menú semanal e inventario patrimonial. |
 | M5 · Institucional y alertas | 8 | Mapa de riesgos, vulneración de derechos, articulaciones y motor de alertas. |
-| M6 · Endurecimiento y salida a producción | 8 | Backups, despliegue, pruebas, rendimiento y capacitación. |
+| M6 · Personal | 5 | Postergado: personal, documentación, capacitaciones y horarios. Las licencias quedan fuera de alcance. |
+| M7 · Endurecimiento | 6 | Monitoreo, pruebas, rendimiento, uso en móvil, manual y alta de nuevas EPI. |
 
 ## Issues
 
@@ -144,28 +145,152 @@ _Decisiones, esqueleto, seguridad y multi-institución. Nada de negocio hasta qu
 - [ ] Definido el plazo de conservación y quién accede a cada categoría
 - [ ] Revisado contra la Ley 25.326
 
-### M1 · Niños y asistencia
+### M1 · MVP: salas, asistencia y tablero
 
-_El núcleo del sistema: legajos, salas, referentes, salud y asistencia diaria._
+_Lo mínimo que una EPI usa todos los días: salas, asistencia de niños, guía de buenas prácticas y tablero de Dirección, validado con un piloto real._
 
-#### CRUD de niños con alta en tres pasos
+#### CRUD de niños
 `area:ninos` · `prioridad:alta` · `estimación:L`
 
 **Criterios de aceptación**
 
-- [ ] Formulario en tres pasos como en el prototipo
-- [ ] Validación de DNI único por institución
-- [ ] Edición y consulta del legajo
-- [ ] Listado con paginación
+- [x] Validación de DNI único por institución
+- [x] Edición y consulta del legajo
+- [x] Listado con paginación
 
-#### Salas, turnos y cupos
+#### Salas con descripción y asignación de niños
 `area:ninos` · `prioridad:alta` · `estimación:M`
 
 **Criterios de aceptación**
 
-- [ ] CRUD de salas con turno y capacidad máxima
-- [ ] Asignación de un niño a una sala
-- [ ] El sistema avisa al superar el cupo de la sala
+- [ ] CRUD de salas con nombre libre, descripción, turno y capacidad máxima (cada EPI define cuántas salas tiene, cómo las llama y para qué las usa)
+- [ ] Asignación manual de cada niño a una sala, sin restricción de edad
+- [ ] Aviso (no bloqueo) al superar el cupo de la sala
+- [ ] En la vista de sala se ve la edad de cada niño y el rango de edades real de la sala
+- [ ] Filtro de niños sin sala asignada
+- [ ] Pase de sala en grupo: seleccionar varios niños y moverlos juntos
+- [ ] Solo el equipo de coordinación y el coordinador pedagógico crean salas y asignan niños
+
+#### Educadoras por sala
+`area:ninos` · `prioridad:alta` · `estimación:S`
+
+**Criterios de aceptación**
+
+- [ ] Una sala puede tener una o más educadoras y una educadora puede estar en más de una sala
+- [ ] La asignación se cambia sin perder datos cuando el personal rota
+- [ ] Solo el equipo de coordinación y el coordinador pedagógico asignan educadoras
+- [ ] La vista de sala muestra sus educadoras
+
+#### Días y turnos de funcionamiento de cada EPI
+`area:ninos` · `prioridad:alta` · `estimación:S`
+
+**Criterios de aceptación**
+
+- [ ] Todas las EPI funcionan de lunes a viernes
+- [ ] Cada EPI indica si funciona solo por la mañana o mañana y tarde (hoy dos tienen turno tarde)
+- [ ] Solo se ofrecen los turnos que la EPI tiene habilitados al crear salas y al tomar asistencia
+
+#### Asistencia diaria de niños
+`area:ninos` · `prioridad:alta` · `estimación:L`
+
+**Criterios de aceptación**
+
+- [ ] La registra el encargado de recepción: presente o ausente por niño y por día, sin horarios
+- [ ] Solo se toma de lunes a viernes
+- [ ] Lista de los niños del turno agrupada por sala, con buscador, donde todos arrancan ausentes y se marcan presentes con un toque (las salas de jornada completa aparecen en ambos turnos)
+- [ ] Cómoda de usar desde el celular
+- [ ] Corregible durante el mismo día
+- [ ] Queda registrado qué días se tomó asistencia y cuáles no
+
+#### Egreso y baja de niños
+`area:ninos` · `prioridad:alta` · `estimación:S`
+
+**Criterios de aceptación**
+
+- [ ] Baja lógica con motivo y fecha
+- [ ] Los niños dados de baja no aparecen en listados activos ni cuentan en la matrícula
+- [ ] Historial consultable
+
+#### Búsqueda y filtros del listado de niños
+`area:ninos` · `prioridad:media` · `estimación:S`
+
+**Criterios de aceptación**
+
+- [ ] Búsqueda por nombre y DNI
+- [ ] Filtros por sala, turno y estado
+- [ ] Los filtros se conservan al navegar
+
+#### Guía de buenas prácticas dentro del sistema
+`area:core` · `prioridad:alta` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Contenido de docs/guia-buenas-practicas-epi.md dividido en secciones navegables con índice
+- [ ] Buscador sobre el texto de la guía
+- [ ] Visible completa para todos los roles
+- [ ] Atajo "Mi rol" que lleva a la ficha de perfil de puesto del Anexo 1 del rol del usuario
+- [ ] Legible desde el celular
+
+#### Perfil de Dirección
+`area:seguridad` · `prioridad:alta` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Perfil transversal a todas las EPI, de solo lectura: no carga ni edita datos
+- [ ] Modelado como identidad aparte de los roles por institución (como superadmin y equipos técnicos), con la decisión registrada en un ADR
+- [ ] Prueba automatizada de que no puede crear, editar ni eliminar
+
+#### Tablero de Dirección con métricas de asistencia
+`area:alertas` · `prioridad:alta` · `estimación:L`
+
+**Criterios de aceptación**
+
+- [ ] Por EPI: matrícula activa, presentes hoy y porcentaje de asistencia
+- [ ] Porcentaje por día, semana y mes, con gráfico de evolución
+- [ ] Desglose por sala
+- [ ] Comparativo de las EPI lado a lado
+- [ ] Porcentaje del período = total de presentes / (matrícula x días con asistencia registrada), contando solo lunes a viernes
+- [ ] Los días sin asistencia registrada no cuentan como 0% y se muestran aparte como control de uso
+
+#### Importación inicial de datos existentes
+`area:ninos` · `prioridad:baja` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Carga desde planilla con los legajos actuales
+- [ ] Reporte de filas rechazadas con el motivo
+- [ ] Proceso repetible sin duplicar registros
+
+#### Despliegue en producción
+`area:infra` · `prioridad:alta` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Dominio propio con HTTPS
+- [ ] Variables de entorno fuera del repositorio
+- [ ] Procedimiento de despliegue documentado y repetible
+
+#### Backups automáticos y restauración probada
+`area:infra` · `prioridad:alta` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Backup diario automático de base de datos y archivos adjuntos
+- [ ] Copia fuera del servidor de producción
+- [ ] Restauración probada al menos una vez y documentada
+
+#### Piloto en una EPI
+`area:core` · `prioridad:alta` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Una EPI elegida carga sus niños y salas
+- [ ] Recepción toma asistencia todos los días durante un mes
+- [ ] Relevamiento de problemas y pedidos del uso real antes de sumar otra EPI
+
+### M2 · Legajo ampliado del niño
+
+_Referentes, vacunación, alergias y legajo con pestañas._
 
 #### Referentes y vínculo familiar
 `area:ninos` · `prioridad:alta` · `estimación:M`
@@ -194,15 +319,6 @@ _El núcleo del sistema: legajos, salas, referentes, salud y asistencia diaria._
 - [ ] Visible de forma destacada en el legajo y en la vista de sala
 - [ ] Consultable desde el módulo de economato
 
-#### Asistencia diaria por sala
-`area:ninos` · `prioridad:alta` · `estimación:L`
-
-**Criterios de aceptación**
-
-- [ ] Toma de asistencia del día por sala y turno
-- [ ] Registro de quién retira al niño
-- [ ] Reporte mensual de asistencia por niño y por sala
-
 #### Vista de legajo con pestañas
 `area:ninos` · `prioridad:media` · `estimación:M`
 
@@ -212,34 +328,91 @@ _El núcleo del sistema: legajos, salas, referentes, salud y asistencia diaria._
 - [ ] Carga de los datos reales desde la base
 - [ ] Impresión del legajo completo
 
-#### Búsqueda y filtros del listado de niños
-`area:ninos` · `prioridad:media` · `estimación:S`
-
-**Criterios de aceptación**
-
-- [ ] Búsqueda por nombre, alias y DNI
-- [ ] Filtros por sala, turno y estado
-- [ ] Los filtros se conservan al navegar
-
-#### Egreso y baja de niños
-`area:ninos` · `prioridad:media` · `estimación:S`
-
-**Criterios de aceptación**
-
-- [ ] Baja lógica con motivo y fecha
-- [ ] Los niños dados de baja no aparecen en listados activos
-- [ ] Historial consultable
-
-#### Importación inicial de datos existentes
+#### Alta de niño en tres pasos
 `area:ninos` · `prioridad:baja` · `estimación:M`
 
 **Criterios de aceptación**
 
-- [ ] Carga desde planilla con los legajos actuales
-- [ ] Reporte de filas rechazadas con el motivo
-- [ ] Proceso repetible sin duplicar registros
+- [ ] Formulario en tres pasos como en el prototipo
+- [ ] Los datos de cada paso se validan antes de avanzar
 
-### M2 · Economato
+### M3 · Pedagógico
+
+_Registro diario, seguimientos, desafíos del desarrollo e informes._
+
+#### Libro de registro diario por sala
+`area:pedagogico` · `prioridad:alta` · `estimación:L`
+
+**Criterios de aceptación**
+
+- [ ] Registro diario por sala con novedades, actividades y observaciones
+- [ ] Un registro por sala y por día, editable solo en el día en curso
+- [ ] Consulta del historial por rango de fechas
+
+#### Seguimientos individuales
+`area:pedagogico` · `prioridad:alta` · `estimación:L`
+
+**Criterios de aceptación**
+
+- [ ] Apertura de seguimiento con motivo y responsable
+- [ ] Bitácora de entradas fechadas dentro del seguimiento
+- [ ] Estados: activo, en pausa, cerrado
+- [ ] Listado de seguimientos activos en el dashboard
+
+#### Desafíos en el desarrollo infantil temprano
+`area:pedagogico` · `prioridad:alta` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Registro por niño con área del desarrollo y descripción
+- [ ] Vinculación con un seguimiento activo
+- [ ] Historial por niño
+
+#### Informe de evolución individual
+`area:pedagogico` · `prioridad:alta` · `estimación:L`
+
+**Criterios de aceptación**
+
+- [ ] Generación del informe desde los datos del seguimiento y del registro diario
+- [ ] Edición del texto antes de cerrar el informe
+- [ ] Exportación a PDF y a Word con membrete de la institución
+
+#### Informe semestral institucional
+`area:pedagogico` · `prioridad:alta` · `estimación:L`
+
+**Criterios de aceptación**
+
+- [ ] Armado del informe con datos consolidados del semestre
+- [ ] Control de qué informes están pendientes por sala
+- [ ] Exportación al formato que exige el organismo
+
+#### Agenda de actividades y planificaciones
+`area:pedagogico` · `prioridad:media` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Carga de actividades con fecha, sala y responsable
+- [ ] Vista de próximas actividades en el dashboard
+- [ ] Marcado de actividad realizada
+
+#### Adjuntos en legajos e informes
+`area:pedagogico` · `prioridad:media` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Carga de archivos con límite de tamaño y tipos permitidos
+- [ ] Los archivos no son accesibles por URL directa sin permiso
+- [ ] Registro en auditoría de cada descarga
+
+#### Plantillas de informe configurables
+`area:pedagogico` · `prioridad:baja` · `estimación:S`
+
+**Criterios de aceptación**
+
+- [ ] El equipo de coordinación puede editar los textos base de cada tipo de informe
+- [ ] Las plantillas son propias de cada institución
+
+### M4 · Economato
 
 _Stock por lote, libro de movimientos, menú semanal e inventario patrimonial._
 
@@ -324,141 +497,6 @@ _Stock por lote, libro de movimientos, menú semanal e inventario patrimonial._
 - [ ] Reporte de cierre con saldos iniciales y finales
 - [ ] Solo el equipo de coordinación puede reabrir un período
 
-### M3 · Pedagógico
-
-_Registro diario, seguimientos, desafíos del desarrollo e informes._
-
-#### Libro de registro diario por sala
-`area:pedagogico` · `prioridad:alta` · `estimación:L`
-
-**Criterios de aceptación**
-
-- [ ] Registro diario por sala con novedades, actividades y observaciones
-- [ ] Un registro por sala y por día, editable solo en el día en curso
-- [ ] Consulta del historial por rango de fechas
-
-#### Seguimientos individuales
-`area:pedagogico` · `prioridad:alta` · `estimación:L`
-
-**Criterios de aceptación**
-
-- [ ] Apertura de seguimiento con motivo y responsable
-- [ ] Bitácora de entradas fechadas dentro del seguimiento
-- [ ] Estados: activo, en pausa, cerrado
-- [ ] Listado de seguimientos activos en el dashboard
-
-#### Desafíos en el desarrollo infantil temprano
-`area:pedagogico` · `prioridad:alta` · `estimación:M`
-
-**Criterios de aceptación**
-
-- [ ] Registro por niño con área del desarrollo y descripción
-- [ ] Vinculación con un seguimiento activo
-- [ ] Historial por niño
-
-#### Informe de evolución individual
-`area:pedagogico` · `prioridad:alta` · `estimación:L`
-
-**Criterios de aceptación**
-
-- [ ] Generación del informe desde los datos del seguimiento y del registro diario
-- [ ] Edición del texto antes de cerrar el informe
-- [ ] Exportación a PDF y a Word con membrete de la institución
-
-#### Informe semestral institucional
-`area:pedagogico` · `prioridad:alta` · `estimación:L`
-
-**Criterios de aceptación**
-
-- [ ] Armado del informe con datos consolidados del semestre
-- [ ] Control de qué informes están pendientes por sala
-- [ ] Exportación al formato que exige el organismo
-
-#### Agenda de actividades y planificaciones
-`area:pedagogico` · `prioridad:media` · `estimación:M`
-
-**Criterios de aceptación**
-
-- [ ] Carga de actividades con fecha, sala y responsable
-- [ ] Vista de próximas actividades en el dashboard
-- [ ] Marcado de actividad realizada
-
-#### Adjuntos en legajos e informes
-`area:pedagogico` · `prioridad:media` · `estimación:M`
-
-**Criterios de aceptación**
-
-- [ ] Carga de archivos con límite de tamaño y tipos permitidos
-- [ ] Los archivos no son accesibles por URL directa sin permiso
-- [ ] Registro en auditoría de cada descarga
-
-#### Plantillas de informe configurables
-`area:pedagogico` · `prioridad:baja` · `estimación:S`
-
-**Criterios de aceptación**
-
-- [ ] El equipo de coordinación puede editar los textos base de cada tipo de informe
-- [ ] Las plantillas son propias de cada institución
-
-### M4 · RRHH
-
-_Personal, documentación con vencimientos, capacitaciones y horarios._
-
-#### CRUD de personal
-`area:rrhh` · `prioridad:alta` · `estimación:M`
-
-**Criterios de aceptación**
-
-- [ ] Alta con datos personales, función y fecha de ingreso
-- [ ] Listado con filtro por función y estado
-- [ ] Baja lógica con motivo
-
-#### Documentación obligatoria con vencimientos
-`area:rrhh` · `prioridad:alta` · `estimación:L`
-
-**Criterios de aceptación**
-
-- [ ] Tipos: antecedentes penales, acta de confidencialidad, libreta sanitaria, título
-- [ ] Cada documento con fecha de emisión, vencimiento y archivo adjunto
-- [ ] Semáforo de estado: vigente, por vencer, vencido
-- [ ] Alerta automática antes del vencimiento
-
-#### Capacitaciones y constancias
-`area:rrhh` · `prioridad:media` · `estimación:M`
-
-**Criterios de aceptación**
-
-- [ ] Registro de capacitación con fecha, institución y carga horaria
-- [ ] Adjunto de la constancia
-- [ ] Reporte de capacitaciones por persona y por período
-
-#### Horarios y funciones
-`area:rrhh` · `prioridad:media` · `estimación:M`
-
-**Criterios de aceptación**
-
-- [ ] Carga del horario semanal por persona y turno
-- [ ] Vista de cobertura por sala y turno
-- [ ] Detección de salas sin personal asignado en un turno
-
-#### Vista de legajo de personal
-`area:rrhh` · `prioridad:media` · `estimación:S`
-
-**Criterios de aceptación**
-
-- [ ] Pestañas: datos, documentación, capacitaciones, horario
-- [ ] Impresión del legajo
-- [ ] Acceso restringido al equipo de coordinación
-
-#### Registro de ausencias y licencias
-`area:rrhh` · `prioridad:baja` · `estimación:M`
-
-**Criterios de aceptación**
-
-- [ ] Carga de licencia con tipo, período y certificado
-- [ ] Impacto visible en la vista de cobertura
-- [ ] Reporte de ausentismo
-
 ### M5 · Institucional y alertas
 
 _Mapa de riesgos, vulneración de derechos, articulaciones y motor de alertas._
@@ -510,7 +548,7 @@ _Mapa de riesgos, vulneración de derechos, articulaciones y motor de alertas._
 - [ ] Cada alerta tiene severidad y enlace al registro de origen
 - [ ] Posibilidad de posponer o descartar con motivo
 
-#### Dashboard con métricas reales
+#### Dashboard de la EPI con métricas reales
 `area:alertas` · `prioridad:media` · `estimación:M`
 
 **Criterios de aceptación**
@@ -537,27 +575,59 @@ _Mapa de riesgos, vulneración de derechos, articulaciones y motor de alertas._
 - [ ] Configuración de frecuencia por usuario
 - [ ] Baja de la suscripción desde el correo
 
-### M6 · Endurecimiento y salida a producción
+### M6 · Personal
 
-_Backups, despliegue, pruebas, rendimiento y capacitación._
+_Postergado: personal, documentación, capacitaciones y horarios. Las licencias quedan fuera de alcance._
 
-#### Backups automáticos y restauración probada
-`area:infra` · `prioridad:alta` · `estimación:M`
-
-**Criterios de aceptación**
-
-- [ ] Backup diario automático de base de datos y archivos adjuntos
-- [ ] Copia fuera del servidor de producción
-- [ ] Restauración probada al menos una vez y documentada
-
-#### Despliegue en producción
-`area:infra` · `prioridad:alta` · `estimación:M`
+#### CRUD de personal
+`area:rrhh` · `prioridad:alta` · `estimación:M`
 
 **Criterios de aceptación**
 
-- [ ] Dominio propio con HTTPS
-- [ ] Variables de entorno fuera del repositorio
-- [ ] Procedimiento de despliegue documentado y repetible
+- [ ] Alta con datos personales, función y fecha de ingreso
+- [ ] Listado con filtro por función y estado
+- [ ] Baja lógica con motivo
+
+#### Documentación obligatoria con vencimientos
+`area:rrhh` · `prioridad:alta` · `estimación:L`
+
+**Criterios de aceptación**
+
+- [ ] Tipos: antecedentes penales, acta de confidencialidad, libreta sanitaria, título
+- [ ] Cada documento con fecha de emisión, vencimiento y archivo adjunto
+- [ ] Semáforo de estado: vigente, por vencer, vencido
+- [ ] Alerta automática antes del vencimiento
+
+#### Capacitaciones y constancias
+`area:rrhh` · `prioridad:media` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Registro de capacitación con fecha, institución y carga horaria
+- [ ] Adjunto de la constancia
+- [ ] Reporte de capacitaciones por persona y por período
+
+#### Horarios y funciones
+`area:rrhh` · `prioridad:media` · `estimación:M`
+
+**Criterios de aceptación**
+
+- [ ] Carga del horario semanal por persona y turno
+- [ ] Vista de cobertura por sala y turno
+- [ ] Detección de salas sin personal asignado en un turno
+
+#### Vista de legajo de personal
+`area:rrhh` · `prioridad:media` · `estimación:S`
+
+**Criterios de aceptación**
+
+- [ ] Pestañas: datos, documentación, capacitaciones, horario
+- [ ] Impresión del legajo
+- [ ] Acceso restringido al equipo de coordinación
+
+### M7 · Endurecimiento
+
+_Monitoreo, pruebas, rendimiento, uso en móvil, manual y alta de nuevas EPI._
 
 #### Monitoreo y registro de errores
 `area:infra` · `prioridad:media` · `estimación:M`
